@@ -1,1 +1,52 @@
-const CACHE="minha-colecao-v1";const CORE=["/","/catalogo/","/colecao/","/faltantes/","/ajustes/","/offline.html","/manifest.webmanifest"];self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE))));self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(response=>{const copy=response.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return response;}).catch(()=>e.request.mode==="navigate"?caches.match("/offline.html"):undefined)));});
+const CACHE = "minha-colecao-v2";
+const BASE = new URL("./", self.location.href).pathname.replace(/\/$/, "");
+const withBase = (path) => `${BASE}${path}`;
+const CORE = [
+  "/",
+  "/catalogo/",
+  "/colecao/",
+  "/faltantes/",
+  "/ajustes/",
+  "/offline.html",
+  "/manifest.webmanifest",
+].map(withBase);
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE).then((cache) => cache.addAll(CORE)).then(() => self.skipWaiting()),
+  );
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))),
+      )
+      .then(() => self.clients.claim()),
+  );
+});
+
+self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") return;
+
+  event.respondWith(
+    caches.match(event.request).then(
+      (cached) =>
+        cached ||
+        fetch(event.request)
+          .then((response) => {
+            if (!response.ok || response.type === "opaque") return response;
+            const copy = response.clone();
+            void caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+            return response;
+          })
+          .catch(() =>
+            event.request.mode === "navigate"
+              ? caches.match(withBase("/offline.html"))
+              : undefined,
+          ),
+    ),
+  );
+});
