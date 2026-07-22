@@ -1,0 +1,3 @@
+import type { Backup,CollectionItem,Settings } from "@/types";
+export const makeBackup=(items:CollectionItem[],settings:Settings):Backup=>({version:1,exportedAt:new Date().toISOString(),items,settings});
+export function parseBackup(value:unknown):Backup{if(!value||typeof value!=="object")throw new Error("Arquivo inválido.");const b=value as Partial<Backup>;if(b.version!==1||!Array.isArray(b.items)||!b.settings)throw new Error("Formato de backup não reconhecido.");for(const item of b.items){if(!item||typeof item.coinId!=="string"||typeof item.owned!=="boolean"||typeof item.quantity!=="number")throw new Error("O backup contém itens inválidos.");}return b as Backup;}
