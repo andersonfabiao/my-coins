@@ -1,11 +1,13 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { ArrowLeft, ChevronRight, Folder, Search, SlidersHorizontal } from "lucide-react";
 import { Header } from "@/components/ui/Header";
 import { CoinGroups } from "@/components/coins/CoinGroups";
-import { coins } from "@/data/coins";
+import { coins, familyNames } from "@/data/coins";
 import { formatFaceValue } from "@/lib/formatting";
 import { useCollection } from "@/context/CollectionContext";
 import type { Family } from "@/types";
@@ -13,28 +15,71 @@ import type { Family } from "@/types";
 type Status = "all" | "owned" | "missing";
 type Sort = "value-asc" | "value-desc" | "year-asc" | "year-desc" | "special";
 
-function Catalog() {
-  const params = useSearchParams();
+const familyOrder: Family[] = ["primeira-familia", "segunda-familia", "comemorativa"];
+const familyDescriptions: Record<Family, string> = {
+  "primeira-familia": "Moedas emitidas a partir de 1994",
+  "segunda-familia": "Moedas emitidas a partir de 1998",
+  comemorativa: "Edições especiais de circulação",
+};
+
+function isFamily(value: string | null): value is Family {
+  return value !== null && familyOrder.includes(value as Family);
+}
+
+function FamilyFolders() {
+  const { items } = useCollection();
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+  return (
+    <>
+      <Header title="Catálogo" subtitle="Escolha uma família do Real brasileiro" />
+      <div className="catalogStandard">
+        <span>Padrão monetário</span>
+        <h2>Real brasileiro</h2>
+      </div>
+      <div className="catalogFamilyList">
+        {familyOrder.map((family) => {
+          const familyCoins = coins.filter((coin) => coin.family === family);
+          const owned = familyCoins.filter((coin) => items.get(coin.id)?.owned).length;
+          const representative = family === "comemorativa"
+            ? familyCoins.find((coin) => coin.id === "real-30-2024") ?? familyCoins[0]
+            : familyCoins.find((coin) => coin.denomination === 1) ?? familyCoins[0];
+          const image = representative.commemorative ? representative.obverseImage : representative.reverseImage;
+          return (
+            <Link className="catalogFamilyCard" href={`/catalogo/?familia=${family}`} key={family}>
+              <span className="catalogFamilyVisual">
+                <Folder aria-hidden="true" />
+                {image && <Image src={`${basePath}${image}`} alt="" width={48} height={48} />}
+              </span>
+              <span className="catalogFamilyInfo">
+                <strong>{familyNames[family]} do Real</strong>
+                <small>{familyDescriptions[family]}</small>
+                <small>{owned}/{familyCoins.length} na coleção</small>
+              </span>
+              <ChevronRight aria-hidden="true" />
+            </Link>
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
+function FamilyCatalog({ family }: { family: Family }) {
   const { items } = useCollection();
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<Status>("all");
-  const [family, setFamily] = useState<Family | "all">((params.get("familia") as Family) || "all");
   const [denomination, setDenomination] = useState("all");
   const [year, setYear] = useState("all");
   const [sort, setSort] = useState<Sort>("year-asc");
-  const years = [...new Set(coins.map((coin) => coin.year))].sort();
-  const hasAdvancedFilters = family !== "all" || denomination !== "all" || year !== "all" || sort !== "year-asc";
+  const familyCoins = useMemo(() => coins.filter((coin) => coin.family === family), [family]);
+  const years = [...new Set(familyCoins.map((coin) => coin.year))].sort();
+  const hasAdvancedFilters = denomination !== "all" || year !== "all" || sort !== "year-asc";
 
-  useEffect(() => {
-    setFamily((params.get("familia") as Family) || "all");
-  }, [params]);
-
-  const shown = useMemo(() => coins.filter((coin) => {
-    const haystack = [coin.title, coin.subtitle, coin.theme, coin.event, coin.notes, coin.year, coin.denominationLabel, coin.family].join(" ").toLowerCase();
+  const shown = useMemo(() => familyCoins.filter((coin) => {
+    const haystack = [coin.title, coin.subtitle, coin.theme, coin.event, coin.notes, coin.year, coin.denominationLabel].join(" ").toLowerCase();
     const owned = items.get(coin.id)?.owned ?? false;
     return haystack.includes(query.toLowerCase())
       && (status === "all" || (status === "owned" ? owned : !owned))
-      && (family === "all" || coin.family === family)
       && (denomination === "all" || coin.denomination === Number(denomination))
       && (year === "all" || coin.year === Number(year));
   }).sort((a, b) =>
@@ -43,11 +88,12 @@ function Catalog() {
         : sort === "year-asc" ? a.year - b.year
           : sort === "year-desc" ? b.year - a.year
             : Number(b.commemorative) - Number(a.commemorative)
-  ), [query, status, family, denomination, year, sort, items]);
+  ), [familyCoins, query, status, denomination, year, sort, items]);
 
   return (
     <>
-      <Header title="Catálogo" subtitle={`${shown.length} moedas agrupadas por valor e ano`} />
+      <Link className="catalogBack" href="/catalogo/"><ArrowLeft /> Famílias do Real</Link>
+      <Header title={`${familyNames[family]} do Real`} subtitle={`${shown.length} moedas agrupadas por valor e ano`} />
       <label className="search">
         <Search />
         <span className="srOnly">Buscar moedas</span>
@@ -61,17 +107,22 @@ function Catalog() {
         </div>
         <details className={`filters compactFilters ${hasAdvancedFilters ? "active" : ""}`}>
           <summary aria-label="Abrir filtros e ordenação"><SlidersHorizontal /> <span>Filtros</span></summary>
-        <div className="filterGrid">
-          <label>Família<select value={family} onChange={(event) => setFamily(event.target.value as typeof family)}><option value="all">Todas</option><option value="primeira-familia">Primeira Família</option><option value="segunda-familia">Segunda Família</option><option value="comemorativa">Comemorativas</option></select></label>
-          <label>Valor<select value={denomination} onChange={(event) => setDenomination(event.target.value)}><option value="all">Todos</option>{[.01, .05, .1, .25, .5, 1].map((value) => <option key={value} value={value}>{formatFaceValue(value)}</option>)}</select></label>
-          <label>Ano<select value={year} onChange={(event) => setYear(event.target.value)}><option value="all">Todos</option>{years.map((value) => <option key={value}>{value}</option>)}</select></label>
-          <label>Ordenar<select value={sort} onChange={(event) => setSort(event.target.value as Sort)}><option value="year-asc">Ano mais antigo</option><option value="year-desc">Ano mais recente</option><option value="value-asc">Menor valor</option><option value="value-desc">Maior valor</option><option value="special">Comemorativas primeiro</option></select></label>
-        </div>
+          <div className="filterGrid familyFilterGrid">
+            <label>Valor<select value={denomination} onChange={(event) => setDenomination(event.target.value)}><option value="all">Todos</option>{[.01, .05, .1, .25, .5, 1].map((value) => <option key={value} value={value}>{formatFaceValue(value)}</option>)}</select></label>
+            <label>Ano<select value={year} onChange={(event) => setYear(event.target.value)}><option value="all">Todos</option>{years.map((value) => <option key={value}>{value}</option>)}</select></label>
+            <label>Ordenar<select value={sort} onChange={(event) => setSort(event.target.value as Sort)}><option value="year-asc">Ano mais antigo</option><option value="year-desc">Ano mais recente</option><option value="value-asc">Menor valor</option><option value="value-desc">Maior valor</option><option value="special">Comemorativas primeiro</option></select></label>
+          </div>
         </details>
       </div>
       <CoinGroups coins={shown} />
     </>
   );
+}
+
+function Catalog() {
+  const params = useSearchParams();
+  const familyParam = params.get("familia");
+  return isFamily(familyParam) ? <FamilyCatalog family={familyParam} /> : <FamilyFolders />;
 }
 
 export default function Page() {

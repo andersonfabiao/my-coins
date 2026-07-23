@@ -20,13 +20,25 @@ export default function Settings() {
     const anchor = document.createElement("a");
     anchor.href = url;
     anchor.download = `minha-colecao-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(anchor);
     anchor.click();
-    URL.revokeObjectURL(url);
+    anchor.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
+  }
+
+  function readFile(file: File): Promise<string> {
+    if (typeof file.text === "function") return file.text();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result ?? ""));
+      reader.onerror = () => reject(reader.error ?? new Error("Não foi possível ler o arquivo."));
+      reader.readAsText(file);
+    });
   }
 
   async function read(file: File) {
     try {
-      setPending(parseBackup(JSON.parse(await file.text())));
+      setPending(parseBackup(JSON.parse(await readFile(file))));
       setMessage("");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Não foi possível importar.");

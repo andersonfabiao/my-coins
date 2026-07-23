@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "minha-colecao-";
-const CACHE = `${CACHE_PREFIX}v6-20260723-home`;
+const CACHE = `${CACHE_PREFIX}v7-20260723-families`;
 const BASE = new URL("./", self.location.href).pathname.replace(/\/$/, "");
 const withBase = (path) => `${BASE}${path}`;
 const CORE = ["/", "/catalogo/", "/colecao/", "/faltantes/", "/ajustes/", "/offline.html", "/manifest.webmanifest"].map(withBase);
