@@ -1,6 +1,6 @@
 # Minha Coleção de Moedas
 
-PWA local para organizar moedas brasileiras do padrão Real. O catálogo fica em código e os dados pessoais são mantidos separadamente no IndexedDB do navegador.
+PWA local para organizar moedas brasileiras do padrão Real. O catálogo contempla as emissões regulares e comemorativas de circulação de 1994 a 2025; os dados pessoais são mantidos separadamente no IndexedDB do navegador.
 
 ## Executar
 
@@ -19,7 +19,7 @@ Hospede a pasta `out/` em um endereço HTTPS, abra o endereço no Safari, toque 
 
 ## Catálogo e imagens
 
-- Edite `src/data/coins.ts` para revisar ou adicionar moedas.
+- Edite `src/data/coins.ts` para revisar ou adicionar moedas. Os anos foram conferidos com a tabela Collectprime de 01/07/2025 e com o catálogo de moedas produzidas do Banco Central do Brasil, atualizado para dezembro de 2025.
 - Não misture dados pessoais nesse arquivo: eles pertencem ao IndexedDB.
 - Consulte `public/coins/README.md` para incluir imagens locais de anverso e reverso.
 - Dados ainda não verificados aparecem como “A confirmar”.
