@@ -153,7 +153,7 @@ const firstFamily: Coin[] = [
   ...regular("primeira-familia", 1, "1 real", [1994], "Aço inoxidável"),
   {
     id: "fao-10-1995",
-    family: "primeira-familia",
+    family: "comemorativa",
     denomination: 0.1,
     denominationLabel: "10 centavos",
     year: 1995,
@@ -170,7 +170,7 @@ const firstFamily: Coin[] = [
   },
   {
     id: "fao-25-1995",
-    family: "primeira-familia",
+    family: "comemorativa",
     denomination: 0.25,
     denominationLabel: "25 centavos",
     year: 1995,
