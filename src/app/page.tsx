@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ChevronRight, Coins, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { Header } from "@/components/ui/Header";
 import { Summary } from "@/components/collection/Summary";
 import { useCollection } from "@/context/CollectionContext";
@@ -21,15 +21,7 @@ export default function Home() {
 
   return (
     <>
-      <Header title="Minha Coleção" subtitle="Moedas do Real Brasileiro" />
-      <section className="hero">
-        <div>
-          <span className="heroIcon"><Coins /></span>
-          <p>Um lugar para cada história</p>
-          <h2>Complete sua coleção, moeda por moeda.</h2>
-        </div>
-        <Sparkles aria-hidden="true" />
-      </section>
+      <Header title="Olá, Fabião 👋" subtitle="Sua coleção do Real Brasileiro" />
       <Summary owned={owned} />
       <div className="sectionTitle">
         <h2>Suas coleções</h2>

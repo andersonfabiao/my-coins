@@ -29,15 +29,17 @@ export function CoinGroups({ coins }: { coins: Coin[] }) {
         const label = group.coins[0].denominationLabel;
         const diameter = Math.max(...group.coins.map((coin) => coin.diameterMm ?? 22));
         const tokenSize = Math.round(44 + ((diameter - 17) / 10) * 14);
+        const representative = group.coins[0];
+        const thumbnail = representative.commemorative ? representative.obverseImage : representative.reverseImage;
         return (
           <details className="denominationGroup" key={group.denomination}>
             <summary>
-              {group.coins[0].obverseImage
-                ? <Image className="denominationPhoto" src={`${basePath}${group.coins[0].obverseImage}`} alt="" width={tokenSize} height={tokenSize} />
+              {thumbnail
+                ? <Image className="denominationPhoto" src={`${basePath}${thumbnail}`} alt="" width={tokenSize} height={tokenSize} />
                 : <span className="denominationToken" style={{ width: tokenSize, height: tokenSize }}>{formatFaceValue(group.denomination)}</span>}
               <span className="denominationSummary">
                 <strong>{label}</strong>
-                <small>{owned}/{group.coins.length} na coleção · toque para ver os anos</small>
+                <small>{owned}/{group.coins.length} na coleção</small>
               </span>
               <span className="disclosure" aria-hidden="true">⌄</span>
             </summary>

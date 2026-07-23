@@ -23,6 +23,7 @@ function Catalog() {
   const [year, setYear] = useState("all");
   const [sort, setSort] = useState<Sort>("year-asc");
   const years = [...new Set(coins.map((coin) => coin.year))].sort();
+  const hasAdvancedFilters = family !== "all" || denomination !== "all" || year !== "all" || sort !== "year-asc";
 
   useEffect(() => {
     setFamily((params.get("familia") as Family) || "all");
@@ -52,20 +53,22 @@ function Catalog() {
         <span className="srOnly">Buscar moedas</span>
         <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ano, valor, tema ou nome" />
       </label>
-      <div className="chips" aria-label="Filtrar por situação">
-        {([["all", "Todas"], ["owned", "Tenho"], ["missing", "Faltam"]] as const).map(([value, label]) => (
-          <button className={status === value ? "selected" : ""} key={value} onClick={() => setStatus(value)}>{label}</button>
-        ))}
-      </div>
-      <details className="filters glass">
-        <summary><SlidersHorizontal /> Filtros e ordenação</summary>
+      <div className="catalogControls">
+        <div className="chips" aria-label="Filtrar por situação">
+          {([["all", "Todas"], ["owned", "Tenho"], ["missing", "Faltam"]] as const).map(([value, label]) => (
+            <button className={status === value ? "selected" : ""} key={value} onClick={() => setStatus(value)}>{label}</button>
+          ))}
+        </div>
+        <details className={`filters compactFilters ${hasAdvancedFilters ? "active" : ""}`}>
+          <summary aria-label="Abrir filtros e ordenação"><SlidersHorizontal /> <span>Filtros</span></summary>
         <div className="filterGrid">
           <label>Família<select value={family} onChange={(event) => setFamily(event.target.value as typeof family)}><option value="all">Todas</option><option value="primeira-familia">Primeira Família</option><option value="segunda-familia">Segunda Família</option><option value="comemorativa">Comemorativas</option></select></label>
           <label>Valor<select value={denomination} onChange={(event) => setDenomination(event.target.value)}><option value="all">Todos</option>{[.01, .05, .1, .25, .5, 1].map((value) => <option key={value} value={value}>{formatFaceValue(value)}</option>)}</select></label>
           <label>Ano<select value={year} onChange={(event) => setYear(event.target.value)}><option value="all">Todos</option>{years.map((value) => <option key={value}>{value}</option>)}</select></label>
           <label>Ordenar<select value={sort} onChange={(event) => setSort(event.target.value as Sort)}><option value="year-asc">Ano mais antigo</option><option value="year-desc">Ano mais recente</option><option value="value-asc">Menor valor</option><option value="value-desc">Maior valor</option><option value="special">Comemorativas primeiro</option></select></label>
         </div>
-      </details>
+        </details>
+      </div>
       <CoinGroups coins={shown} />
     </>
   );

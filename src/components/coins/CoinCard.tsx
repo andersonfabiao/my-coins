@@ -13,6 +13,7 @@ export function CoinCard({ coin }: { coin: Coin }) {
   const owned = items.get(coin.id)?.owned ?? false;
   const visualSize = Math.round(44 + (((coin.diameterMm ?? 22) - 17) / 10) * 12);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+  const thumbnail = coin.commemorative ? coin.obverseImage : coin.reverseImage;
   return (
     <article className={`coinCard ${owned ? "owned" : "missingCoin"}`}>
       <button
@@ -22,8 +23,8 @@ export function CoinCard({ coin }: { coin: Coin }) {
         aria-pressed={owned}
       >
         <div className="coinThumb">
-          {coin.obverseImage
-            ? <Image className="coinPhoto" src={`${basePath}${coin.obverseImage}`} alt="" width={visualSize} height={visualSize} />
+          {thumbnail
+            ? <Image className="coinPhoto" src={`${basePath}${thumbnail}`} alt="" width={visualSize} height={visualSize} />
             : <div className="coinVisual" aria-hidden="true" style={{ width: visualSize, height: visualSize }}><strong>{formatFaceValue(coin.denomination)}</strong></div>}
           <span className="coinCheck" aria-hidden="true">
             {owned ? <Check /> : <Plus />}
