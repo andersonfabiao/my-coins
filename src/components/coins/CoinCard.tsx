@@ -5,20 +5,17 @@ import { Check, ChevronRight, Plus } from "lucide-react";
 import type { Coin } from "@/types";
 import { familyNames } from "@/data/coins";
 import { useCollection } from "@/context/CollectionContext";
+import { formatFaceValue, formatMintage } from "@/lib/formatting";
 
 export function CoinCard({ coin }: { coin: Coin }) {
   const { items, toggle } = useCollection();
   const owned = items.get(coin.id)?.owned ?? false;
-  const displayValue =
-    coin.denomination === 1 ? "1" : String(Math.round(coin.denomination * 100));
-
   return (
     <article className={`coinCard ${owned ? "owned" : "missingCoin"}`}>
       <Link href={`/moeda/${coin.id}/`}>
         <div className="coinThumb">
           <div className="coinVisual" aria-hidden="true">
-            <span>R$</span>
-            <strong>{displayValue}</strong>
+            <strong>{formatFaceValue(coin.denomination)}</strong>
           </div>
         </div>
         <div className="coinInfo">
@@ -27,7 +24,7 @@ export function CoinCard({ coin }: { coin: Coin }) {
             {coin.commemorative && <b>Comemorativa</b>}
           </div>
           <h3>{coin.title}</h3>
-          <p>{coin.subtitle ?? `${coin.denominationLabel} · ${coin.year}`}</p>
+          <p>{coin.subtitle ?? `${coin.year} · Tiragem ${formatMintage(coin.mintage)}`}</p>
           <span className={`statusBadge ${owned ? "have" : "missing"}`}>
             {owned ? "Tenho" : "Falta"}
           </span>
