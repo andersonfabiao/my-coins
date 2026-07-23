@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Check, Plus } from "lucide-react";
 import { familyNames } from "@/data/coins";
 import { useCollection } from "@/context/CollectionContext";
@@ -11,6 +12,7 @@ export function CoinDetail({ coin }: { coin: Coin }) {
   const { items, save, toggle } = useCollection();
   const item = items.get(coin.id);
   const owned = item?.owned ?? false;
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const update = (values: Partial<NonNullable<typeof item>>) => void save({
     coinId: coin.id,
     owned: true,
@@ -24,7 +26,12 @@ export function CoinDetail({ coin }: { coin: Coin }) {
     <>
       <Link className="back" href="/catalogo/"><ArrowLeft /> Catálogo</Link>
       <section className="detailHero">
-        <div className="bigCoin"><strong>{formatFaceValue(coin.denomination)}</strong></div>
+        {coin.obverseImage && coin.reverseImage ? (
+          <div className="coinFaces">
+            <figure><Image src={`${basePath}${coin.obverseImage}`} alt={`Anverso de ${coin.title}`} width={320} height={320} /><figcaption>Anverso</figcaption></figure>
+            <figure><Image src={`${basePath}${coin.reverseImage}`} alt={`Reverso de ${coin.title}`} width={320} height={320} /><figcaption>Reverso</figcaption></figure>
+          </div>
+        ) : <div className="bigCoin"><strong>{formatFaceValue(coin.denomination)}</strong></div>}
         <p>{familyNames[coin.family]}</p>
         <h1>{coin.title}</h1>
         <span>{coin.subtitle}</span>

@@ -1,4 +1,5 @@
 import type { Coin } from "@/types";
+import { officialImagesFor } from "@/data/coin-images";
 
 const SECOND_FAMILY_MATERIALS: Record<Coin["denomination"], string> = {
   0.01: "Aço revestido de cobre",
@@ -326,7 +327,8 @@ const commemoratives: Coin[] = [
   ),
 ];
 
-export const coins: Coin[] = [...firstFamily, ...secondFamily, ...commemoratives];
+export const coins: Coin[] = [...firstFamily, ...secondFamily, ...commemoratives]
+  .map((coin) => ({ ...coin, ...officialImagesFor(coin) }));
 
 export const familyNames: Record<Coin["family"], string> = {
   "primeira-familia": "Primeira Família",

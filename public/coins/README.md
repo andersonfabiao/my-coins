@@ -1,3 +1,9 @@
-# Imagens das moedas
+# Imagens oficiais das moedas
 
-Adicione imagens locais em WebP ou PNG e informe o caminho em `src/data/coins.ts`, nos campos `obverseImage` e `reverseImage` (por exemplo, `/coins/1994-1-real-anverso.webp`). Prefira imagens quadradas, otimizadas e com fundo transparente. O aplicativo usa um placeholder quando esses campos não estão definidos.
+As imagens em `bcb/` foram obtidas das páginas oficiais de moedas produzidas e
+moedas comemorativas do Banco Central do Brasil. O script
+`scripts/fetch-coin-images.mjs` registra as URLs de origem e gera versões WebP
+otimizadas, separadas em anverso e reverso.
+
+Moedas regulares reaproveitam a fotografia oficial correspondente à família e
+denominação. As versões comemorativas utilizam fotografias próprias.

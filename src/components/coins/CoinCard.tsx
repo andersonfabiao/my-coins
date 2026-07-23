@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Check, ChevronRight, Plus } from "lucide-react";
 import type { Coin } from "@/types";
 import { familyNames } from "@/data/coins";
@@ -11,14 +12,25 @@ export function CoinCard({ coin }: { coin: Coin }) {
   const { items, toggle } = useCollection();
   const owned = items.get(coin.id)?.owned ?? false;
   const visualSize = Math.round(44 + (((coin.diameterMm ?? 22) - 17) / 10) * 12);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   return (
     <article className={`coinCard ${owned ? "owned" : "missingCoin"}`}>
-      <Link href={`/moeda/${coin.id}/`}>
+      <button
+        className="coinToggle"
+        onClick={() => void toggle(coin.id)}
+        aria-label={`${owned ? "Remover" : "Adicionar"} ${coin.title} ${owned ? "da" : "à"} coleção`}
+        aria-pressed={owned}
+      >
         <div className="coinThumb">
-          <div className="coinVisual" aria-hidden="true" style={{ width: visualSize, height: visualSize }}>
-            <strong>{formatFaceValue(coin.denomination)}</strong>
-          </div>
+          {coin.obverseImage
+            ? <Image className="coinPhoto" src={`${basePath}${coin.obverseImage}`} alt="" width={visualSize} height={visualSize} />
+            : <div className="coinVisual" aria-hidden="true" style={{ width: visualSize, height: visualSize }}><strong>{formatFaceValue(coin.denomination)}</strong></div>}
+          <span className="coinCheck" aria-hidden="true">
+            {owned ? <Check /> : <Plus />}
+          </span>
         </div>
+      </button>
+      <Link className="coinDetailLink" href={`/moeda/${coin.id}/`}>
         <div className="coinInfo">
           <div className="coinMeta">
             <span>{familyNames[coin.family]}</span>
@@ -32,14 +44,6 @@ export function CoinCard({ coin }: { coin: Coin }) {
         </div>
         <ChevronRight className="chevron" aria-hidden="true" />
       </Link>
-      <button
-        className="coinCheck"
-        onClick={() => void toggle(coin.id)}
-        aria-label={`${owned ? "Remover" : "Adicionar"} ${coin.title} ${owned ? "da" : "à"} coleção`}
-        aria-pressed={owned}
-      >
-        {owned ? <Check /> : <Plus />}
-      </button>
     </article>
   );
 }
