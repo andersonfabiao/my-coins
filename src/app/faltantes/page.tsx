@@ -20,13 +20,36 @@ export default function Missing() {
   const text = `Moedas que faltam na minha coleção:\n${missing.map((coin) => `• ${formatFaceValue(coin.denomination)} · ${coin.title}`).join("\n")}`;
 
   async function copy() {
-    await navigator.clipboard.writeText(text);
-    setNotice("Lista copiada!");
+    try {
+      if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+      }
+      setNotice("Lista copiada!");
+    } catch {
+      setNotice("Não foi possível copiar. Tente novamente.");
+    }
   }
 
   async function share() {
-    if (navigator.share) await navigator.share({ title: "Moedas faltantes", text });
-    else await copy();
+    try {
+      if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+        await navigator.share({ title: "Moedas faltantes", text });
+      } else {
+        await copy();
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
+      await copy();
+    }
   }
 
   return (
