@@ -10,11 +10,12 @@ import { formatFaceValue, formatMintage } from "@/lib/formatting";
 export function CoinCard({ coin }: { coin: Coin }) {
   const { items, toggle } = useCollection();
   const owned = items.get(coin.id)?.owned ?? false;
+  const visualSize = Math.round(44 + (((coin.diameterMm ?? 22) - 17) / 10) * 12);
   return (
     <article className={`coinCard ${owned ? "owned" : "missingCoin"}`}>
       <Link href={`/moeda/${coin.id}/`}>
         <div className="coinThumb">
-          <div className="coinVisual" aria-hidden="true">
+          <div className="coinVisual" aria-hidden="true" style={{ width: visualSize, height: visualSize }}>
             <strong>{formatFaceValue(coin.denomination)}</strong>
           </div>
         </div>

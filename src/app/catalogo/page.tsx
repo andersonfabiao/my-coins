@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { Header } from "@/components/ui/Header";
@@ -23,6 +23,10 @@ function Catalog() {
   const [year, setYear] = useState("all");
   const [sort, setSort] = useState<Sort>("year-asc");
   const years = [...new Set(coins.map((coin) => coin.year))].sort();
+
+  useEffect(() => {
+    setFamily((params.get("familia") as Family) || "all");
+  }, [params]);
 
   const shown = useMemo(() => coins.filter((coin) => {
     const haystack = [coin.title, coin.subtitle, coin.theme, coin.event, coin.notes, coin.year, coin.denominationLabel, coin.family].join(" ").toLowerCase();

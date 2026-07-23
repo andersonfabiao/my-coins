@@ -22,13 +22,17 @@ export function CoinGroups({ coins }: { coins: Coin[] }) {
 
   return (
     <div className="denominationGroups">
-      {groups.map((group, index) => {
+      {groups.map((group) => {
         const owned = group.coins.filter((coin) => items.get(coin.id)?.owned).length;
         const label = group.coins[0].denominationLabel;
+        const diameter = Math.max(...group.coins.map((coin) => coin.diameterMm ?? 22));
+        const tokenSize = Math.round(44 + ((diameter - 17) / 10) * 14);
         return (
-          <details className="denominationGroup" key={group.denomination} open={index === 0}>
+          <details className="denominationGroup" key={group.denomination}>
             <summary>
-              <span className="denominationToken">{formatFaceValue(group.denomination)}</span>
+              <span className="denominationToken" style={{ width: tokenSize, height: tokenSize }}>
+                {formatFaceValue(group.denomination)}
+              </span>
               <span className="denominationSummary">
                 <strong>{label}</strong>
                 <small>{owned}/{group.coins.length} na coleção · toque para ver os anos</small>
