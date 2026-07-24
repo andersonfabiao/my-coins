@@ -7,7 +7,7 @@ import {
 } from "@/lib/collection-migrations";
 
 const DB_NAME = "minha-colecao-moedas";
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 const COLLECTION_STORE = "collection";
 const SETTINGS_STORE = "settings";
 const META_STORE = "meta";
@@ -87,7 +87,7 @@ function openDatabase(): Promise<IDBDatabase> {
           ? tx?.objectStore(META_STORE)
           : db.createObjectStore(META_STORE);
 
-        if ((event as IDBVersionChangeEvent).oldVersion < 3 && tx) {
+        if ((event as IDBVersionChangeEvent).oldVersion < 4 && tx) {
           const collection = tx.objectStore(COLLECTION_STORE);
           const cursorRequest = collection.openCursor();
           cursorRequest.onsuccess = () => {

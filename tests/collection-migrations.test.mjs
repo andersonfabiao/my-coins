@@ -33,7 +33,12 @@ test("migra item antigo preservando checkbox, quantidade, estado e observações
     updatedAt: "2025-03-11T10:00:00.000Z",
   };
 
-  assert.deepEqual(migrations.migrateCollectionItem(oldItem), oldItem);
+  assert.deepEqual(migrations.migrateCollectionItem(oldItem), {
+    ...oldItem,
+    storageLocation: undefined,
+    favorite: false,
+    wantedForTrade: false,
+  });
 });
 
 test("recupera quantidade padrão de registros anteriores ao campo quantity", () => {
@@ -46,7 +51,7 @@ test("recupera quantidade padrão de registros anteriores ao campo quantity", ()
   assert.equal(missing.owned, false);
 });
 
-test("lê backup V1 e converte para V2 sem perder dados", () => {
+test("lê backup V1 e converte para V3 sem perder dados", () => {
   const backupV1 = {
     version: 1,
     exportedAt: "2025-01-02T03:04:05.000Z",
@@ -62,8 +67,8 @@ test("lê backup V1 e converte para V2 sem perder dados", () => {
   };
 
   const migrated = migrations.migrateBackup(backupV1);
-  assert.equal(migrated.version, 2);
-  assert.equal(migrated.collectionSchemaVersion, 2);
+  assert.equal(migrated.version, 3);
+  assert.equal(migrated.collectionSchemaVersion, 3);
   assert.equal(migrated.exportedAt, backupV1.exportedAt);
   assert.deepEqual(migrated.settings, backupV1.settings);
   assert.equal(migrated.items[0].coinId, "real-30-2024");
@@ -73,7 +78,7 @@ test("lê backup V1 e converte para V2 sem perder dados", () => {
   assert.equal(migrated.items[0].personalNotes, "Backup antigo");
 });
 
-test("lê backup V2 preservando todos os campos pessoais", () => {
+test("lê backup V2 e converte para V3 preservando todos os campos pessoais", () => {
   const backupV2 = {
     version: 2,
     collectionSchemaVersion: 2,
@@ -92,7 +97,39 @@ test("lê backup V2 preservando todos os campos pessoais", () => {
   };
 
   const migrated = migrations.migrateBackup(backupV2);
-  assert.deepEqual(migrated, backupV2);
+  assert.equal(migrated.version, 3);
+  assert.equal(migrated.collectionSchemaVersion, 3);
+  assert.deepEqual(migrated.items[0], {
+    ...backupV2.items[0],
+    storageLocation: undefined,
+    favorite: false,
+    wantedForTrade: false,
+  });
+});
+
+test("lê backup V3 preservando os recursos avançados", () => {
+  const item = {
+    coinId: "real-1-2024",
+    owned: true,
+    quantity: 3,
+    condition: "SOB",
+    acquisitionDate: "2026-07-20",
+    acquisitionPrice: 18.75,
+    personalNotes: "Uma para a coleção e duas duplicatas.",
+    storageLocation: "Álbum 2, folha 4",
+    favorite: true,
+    wantedForTrade: true,
+    updatedAt: "2026-07-24T12:00:00.000Z",
+  };
+  const backupV3 = {
+    version: 3,
+    collectionSchemaVersion: 3,
+    exportedAt: "2026-07-24T12:00:00.000Z",
+    settings: { theme: "dark", view: "grid" },
+    items: [item],
+  };
+
+  assert.deepEqual(migrations.migrateBackup(backupV3), backupV3);
 });
 
 test("rejeita versões desconhecidas e backups sem itens válidos", () => {
@@ -108,7 +145,7 @@ test("rejeita versões desconhecidas e backups sem itens válidos", () => {
 
 test("IndexedDB mantém keyPath e executa upgrade versionado", async () => {
   const database = await readFile(path.join(root, "src", "lib", "database.ts"), "utf8");
-  assert.match(database, /const DB_VERSION = 3/);
+  assert.match(database, /const DB_VERSION = 4/);
   assert.match(database, /const META_STORE = "meta"/);
   assert.match(database, /keyPath: "coinId"/);
   assert.match(database, /openCursor\(\)/);
@@ -116,9 +153,9 @@ test("IndexedDB mantém keyPath e executa upgrade versionado", async () => {
   assert.match(database, /meta\?\.put\(COLLECTION_SCHEMA_VERSION, "collectionSchemaVersion"\)/);
 });
 
-test("exportação usa V2 e restore delega à migração compatível", async () => {
+test("exportação usa V3 e restore delega à migração compatível", async () => {
   const backup = await readFile(path.join(root, "src", "lib", "backup.ts"), "utf8");
-  assert.match(backup, /version: 2/);
+  assert.match(backup, /version: 3/);
   assert.match(backup, /collectionSchemaVersion: COLLECTION_SCHEMA_VERSION/);
   assert.match(backup, /return migrateBackup\(value\)/);
 });

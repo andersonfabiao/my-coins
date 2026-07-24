@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Check, ChevronRight, Plus } from "lucide-react";
+import { Check, ChevronRight, Heart, Plus, Repeat2 } from "lucide-react";
 import type { CatalogEntry } from "@/types";
 import { familyNames } from "@/data/coins";
 import { useCollection } from "@/context/CollectionContext";
@@ -14,6 +14,7 @@ export function CoinCard({ entry }: { entry: CatalogEntry }) {
   const collectionItem = items.get(coinIssue.id);
   const owned = collectionItem?.owned ?? false;
   const quantity = String(Math.max(1, collectionItem?.quantity ?? 1)).padStart(2, "0");
+  const duplicates = Math.max(0, (collectionItem?.quantity ?? 0) - 1);
   const visualSize = Math.round(44 + (((coinIssue.diameterMm ?? 22) - 17) / 10) * 12);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const thumbnail = coinType.commemorative
@@ -47,6 +48,13 @@ export function CoinCard({ entry }: { entry: CatalogEntry }) {
           <span className={`statusBadge ${owned ? "have" : "missing"}`}>
             {owned ? `Tenho: ${quantity}` : "Falta"}
           </span>
+          {owned && (collectionItem?.favorite || collectionItem?.wantedForTrade || duplicates > 0) && (
+            <span className="collectionFlags">
+              {collectionItem?.favorite && <span><Heart /> Favorita</span>}
+              {duplicates > 0 && <span>+{duplicates} duplicata{duplicates > 1 ? "s" : ""}</span>}
+              {collectionItem?.wantedForTrade && <span><Repeat2 /> Troca</span>}
+            </span>
+          )}
         </div>
         <ChevronRight className="chevron" aria-hidden="true" />
       </Link>

@@ -1,6 +1,6 @@
-import type { BackupV2, CollectionItem, Condition, Settings } from "@/types";
+import type { BackupV3, CollectionItem, Condition, Settings } from "@/types";
 
-export const COLLECTION_SCHEMA_VERSION = 2 as const;
+export const COLLECTION_SCHEMA_VERSION = 3 as const;
 
 const conditions: Condition[] = ["", "FC", "SOB", "MBC", "BC", "REGULAR"];
 const defaultSettings: Settings = { theme: "system", view: "list" };
@@ -30,6 +30,9 @@ export function migrateCollectionItem(value: unknown): CollectionItem | null {
       ? item.acquisitionPrice
       : null,
     personalNotes: typeof item.personalNotes === "string" ? item.personalNotes : undefined,
+    storageLocation: typeof item.storageLocation === "string" ? item.storageLocation : undefined,
+    favorite: item.favorite === true,
+    wantedForTrade: item.wantedForTrade === true,
     updatedAt: typeof item.updatedAt === "string" ? item.updatedAt : new Date(0).toISOString(),
   };
 }
@@ -40,10 +43,10 @@ export function migrateCollectionItems(values: unknown[]): CollectionItem[] {
     .filter((item): item is CollectionItem => item !== null);
 }
 
-export function migrateBackup(value: unknown): BackupV2 {
+export function migrateBackup(value: unknown): BackupV3 {
   if (!value || typeof value !== "object") throw new Error("Arquivo inválido.");
   const backup = value as Record<string, unknown>;
-  if ((backup.version !== 1 && backup.version !== 2) || !Array.isArray(backup.items)) {
+  if (![1, 2, 3].includes(Number(backup.version)) || !Array.isArray(backup.items)) {
     throw new Error("Formato de backup não reconhecido.");
   }
 
@@ -53,7 +56,7 @@ export function migrateBackup(value: unknown): BackupV2 {
   }
 
   return {
-    version: 2,
+    version: 3,
     collectionSchemaVersion: COLLECTION_SCHEMA_VERSION,
     exportedAt: typeof backup.exportedAt === "string" ? backup.exportedAt : new Date().toISOString(),
     items,

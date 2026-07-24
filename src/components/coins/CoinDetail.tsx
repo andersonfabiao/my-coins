@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Check, Plus } from "lucide-react";
+import { ArrowLeft, Check, Heart, MapPin, Plus, Repeat2 } from "lucide-react";
 import { familyNames } from "@/data/coins";
 import { useCollection } from "@/context/CollectionContext";
 import { formatMintage } from "@/lib/formatting";
@@ -13,6 +13,7 @@ export function CoinDetail({ entry }: { entry: CatalogEntry }) {
   const { items, save, toggle } = useCollection();
   const item = items.get(coinIssue.id);
   const owned = item?.owned ?? false;
+  const duplicates = Math.max(0, (item?.quantity ?? 0) - 1);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const update = (values: Partial<NonNullable<typeof item>>) => void save({
     coinId: coinIssue.id,
@@ -44,6 +45,24 @@ export function CoinDetail({ entry }: { entry: CatalogEntry }) {
       <button className={`collectionButton ${owned ? "owned" : ""}`} onClick={() => void toggle(coinIssue.id)}>
         {owned ? <><Check /> Na minha coleção</> : <><Plus /> Adicionar à coleção</>}
       </button>
+      {owned && (
+        <div className="collectionQuickActions" aria-label="Marcadores da coleção">
+          <button
+            className={item?.favorite ? "active" : ""}
+            aria-pressed={item?.favorite ?? false}
+            onClick={() => update({ favorite: !item?.favorite })}
+          >
+            <Heart /> {item?.favorite ? "Favorita" : "Favoritar"}
+          </button>
+          <button
+            className={item?.wantedForTrade ? "active" : ""}
+            aria-pressed={item?.wantedForTrade ?? false}
+            onClick={() => update({ wantedForTrade: !item?.wantedForTrade })}
+          >
+            <Repeat2 /> {item?.wantedForTrade ? "Disponível para troca" : "Marcar para troca"}
+          </button>
+        </div>
+      )}
       <section className="detailSection">
         <h2>Sobre esta moeda</h2>
         <dl>
@@ -59,11 +78,16 @@ export function CoinDetail({ entry }: { entry: CatalogEntry }) {
       {owned && (
         <section className="detailSection editor">
           <h2>Meu exemplar</h2>
+          <p className="editorSummary">
+            {duplicates > 0 ? `${duplicates} duplicata${duplicates > 1 ? "s" : ""}` : "Sem duplicatas"}
+            {item?.storageLocation ? ` · ${item.storageLocation}` : ""}
+          </p>
           <div className="formGrid">
-            <label>Quantidade<input type="number" min="1" value={item?.quantity ?? 1} onChange={(event) => update({ quantity: Number(event.target.value) })} /></label>
+            <label>Quantidade<input type="number" min="1" step="1" value={item?.quantity ?? 1} onChange={(event) => update({ quantity: Math.max(1, Math.trunc(Number(event.target.value) || 1)) })} /></label>
             <label>Conservação<select value={item?.condition ?? ""} onChange={(event) => update({ condition: event.target.value as Condition })}><option value="">Não informado</option><option value="FC">FC — Flor de Cunho</option><option value="SOB">SOB — Soberba</option><option value="MBC">MBC — Muito Bem Conservada</option><option value="BC">BC — Bem Conservada</option><option value="REGULAR">Regular</option></select></label>
             <label>Data de aquisição<input type="date" value={item?.acquisitionDate ?? ""} onChange={(event) => update({ acquisitionDate: event.target.value })} /></label>
             <label>Preço pago (R$)<input type="number" min="0" step="0.01" value={item?.acquisitionPrice ?? ""} onChange={(event) => update({ acquisitionPrice: event.target.value ? Number(event.target.value) : null })} /></label>
+            <label className="locationField"><MapPin /> Localização<input type="text" value={item?.storageLocation ?? ""} onChange={(event) => update({ storageLocation: event.target.value })} placeholder="Álbum, gaveta, cápsula…" /></label>
           </div>
           <label>Observações pessoais<textarea value={item?.personalNotes ?? ""} onChange={(event) => update({ personalNotes: event.target.value })} placeholder="Onde encontrou, história da peça…" /></label>
         </section>

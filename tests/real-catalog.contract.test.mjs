@@ -141,7 +141,7 @@ test("o checkbox continua ligado ao ID e à persistência da coleção", async (
   assert.match(context, /coinId:id,owned/);
   assert.match(context, /quantity:owned\?Math\.max\(1,old\?\.quantity\?\?1\):0/);
   assert.match(context, /await repository\.save\(item\)/);
-  assert.match(context, /\.set\(item\.coinId,item\)/);
+  assert.match(context, /\.set\(saved\.coinId,saved\)/);
 
   assert.match(database, /createObjectStore\(COLLECTION_STORE,\s*\{\s*keyPath:\s*"coinId"\s*\}\)/);
   assert.match(database, /store\.put\(\{ \.\.\.migrated, schemaVersion: COLLECTION_SCHEMA_VERSION \}\)/);

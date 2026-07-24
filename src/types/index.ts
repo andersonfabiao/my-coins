@@ -66,6 +66,9 @@ export interface CollectionItem {
   acquisitionDate?: string;
   acquisitionPrice?: number | null;
   personalNotes?: string;
+  storageLocation?: string;
+  favorite?: boolean;
+  wantedForTrade?: boolean;
   updatedAt: string;
 }
 
@@ -94,4 +97,12 @@ export interface BackupV2 {
   settings: Settings;
 }
 
-export type Backup = BackupV1 | BackupV2;
+export interface BackupV3 {
+  version: 3;
+  collectionSchemaVersion: 3;
+  exportedAt: string;
+  items: CollectionItem[];
+  settings: Settings;
+}
+
+export type Backup = BackupV1 | BackupV2 | BackupV3;
