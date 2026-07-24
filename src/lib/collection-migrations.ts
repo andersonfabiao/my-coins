@@ -1,4 +1,4 @@
-import type { BackupV3, CollectionItem, Condition, Settings } from "@/types";
+import type { BackupV4, CollectionItem, Condition, Settings } from "@/types";
 
 export const COLLECTION_SCHEMA_VERSION = 3 as const;
 
@@ -43,22 +43,25 @@ export function migrateCollectionItems(values: unknown[]): CollectionItem[] {
     .filter((item): item is CollectionItem => item !== null);
 }
 
-export function migrateBackup(value: unknown): BackupV3 {
+export function migrateBackup(value: unknown): BackupV4 {
   if (!value || typeof value !== "object") throw new Error("Arquivo inválido.");
   const backup = value as Record<string, unknown>;
-  if (![1, 2, 3].includes(Number(backup.version)) || !Array.isArray(backup.items)) {
+  if (![1, 2, 3, 4].includes(Number(backup.version)) || !Array.isArray(backup.items)) {
     throw new Error("Formato de backup não reconhecido.");
   }
+  if (backup.items.length > 100_000) throw new Error("Backup excede o limite de 100.000 itens.");
 
-  const items = migrateCollectionItems(backup.items);
+  const migrated = migrateCollectionItems(backup.items);
+  const items = [...new Map(migrated.map((item) => [item.coinId, item])).values()];
   if (backup.items.length > 0 && items.length === 0) {
     throw new Error("O backup não contém itens válidos.");
   }
 
   return {
-    version: 3,
+    version: 4,
     collectionSchemaVersion: COLLECTION_SCHEMA_VERSION,
     exportedAt: typeof backup.exportedAt === "string" ? backup.exportedAt : new Date().toISOString(),
+    itemCount: items.length,
     items,
     settings: isSettings(backup.settings) ? backup.settings : defaultSettings,
   };

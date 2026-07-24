@@ -79,7 +79,7 @@ for (const type of includedTypes) {
   const image = imageByType.get(type.id);
   if (!image || image.status !== "downloaded" || !image.file)
     throw new Error(`Imagem ausente para ${type.id}`);
-  const extension = extname(image.file).toLowerCase() || ".jpg";
+  const extension = extname(image.file).toLowerCase() || ".webp";
   const fileName = `${type.id.slice(-10)}${extension}`;
   await copyFile(resolve(inputDir, image.file), resolve(imageDir, fileName));
   const localImage = `/coins/bcb/historical/${fileName}`;

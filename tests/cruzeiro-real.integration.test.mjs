@@ -28,7 +28,7 @@ test("todas as emissões importadas têm rota estática e imagem local", async (
     assert.equal((await stat(path.join(root, "out", "moeda", id, "index.html"))).isFile(), true);
   }
   const images = (await readdir(path.join(root, "public", "coins", "bcb")))
-    .filter((name) => /^cruzeiro-real-(5|10|50|100)\.jpg$/.test(name));
+    .filter((name) => /^cruzeiro-real-(5|10|50|100)\.webp$/.test(name));
   assert.equal(images.length, 4);
 });
 
@@ -47,9 +47,9 @@ test("PWA inclui shell offline e versão de cache da expansão", async () => {
     readFile(path.join(root, "public", "manifest.webmanifest"), "utf8"),
     readFile(path.join(root, "public", "offline.html"), "utf8"),
   ]);
-  assert.match(serviceWorker, /v13-20260724-interface-ios26/);
+  assert.match(serviceWorker, /v14-20260724-auditoria/);
   assert.match(serviceWorker, /networkFirst/);
-  assert.match(serviceWorker, /cacheFirst/);
+  assert.match(serviceWorker, /staleWhileRevalidate/);
   assert.match(manifest, /moedas brasileiras/);
   assert.ok(offline.length > 100);
 });

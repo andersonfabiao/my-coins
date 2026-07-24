@@ -70,5 +70,5 @@ test("painel é local, possui todos os agrupamentos e integra a navegação/PWA"
   assert.match(page, /Nenhum dado é enviado/);
   assert.match(shell, /\/estatisticas\//);
   assert.match(worker, /\/estatisticas\//);
-  assert.match(worker, /v13-20260724-interface-ios26/);
+  assert.match(worker, /v14-20260724-auditoria/);
 });

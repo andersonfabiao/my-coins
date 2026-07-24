@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   basePath,
   images: { unoptimized: true },
   trailingSlash: true,
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+    useLightningcss: true,
+  },
 };
 
 export default nextConfig;

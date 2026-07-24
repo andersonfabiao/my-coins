@@ -72,8 +72,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 5,
     "denominationLabel": "Cz$ 5,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/3be43a18a5.jpg",
-    "reverseImage": "/coins/bcb/historical/3be43a18a5.jpg"
+    "obverseImage": "/coins/bcb/historical/3be43a18a5.webp",
+    "reverseImage": "/coins/bcb/historical/3be43a18a5.webp"
   },
   {
     "id": "ct-ms-cruzado-cz-vigente-de-28-2-1986-a-15-1-1989-ef47f3835a-moeda-cruzado--3cd29d02c5",
@@ -82,8 +82,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 100,
     "denominationLabel": "Cz$ 100,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/3cd29d02c5.jpg",
-    "reverseImage": "/coins/bcb/historical/3cd29d02c5.jpg"
+    "obverseImage": "/coins/bcb/historical/3cd29d02c5.webp",
+    "reverseImage": "/coins/bcb/historical/3cd29d02c5.webp"
   },
   {
     "id": "ct-ms-cruzado-cz-vigente-de-28-2-1986-a-15-1-1989-ef47f3835a-moeda-cruzado--41ee114744",
@@ -92,8 +92,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 10,
     "denominationLabel": "Cz$ 10,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/41ee114744.jpg",
-    "reverseImage": "/coins/bcb/historical/41ee114744.jpg"
+    "obverseImage": "/coins/bcb/historical/41ee114744.webp",
+    "reverseImage": "/coins/bcb/historical/41ee114744.webp"
   },
   {
     "id": "ct-ms-cruzado-cz-vigente-de-28-2-1986-a-15-1-1989-ef47f3835a-moeda-cruzado--4578f2d6ab",
@@ -102,8 +102,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 1,
     "denominationLabel": "Cz$ 1,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/4578f2d6ab.jpg",
-    "reverseImage": "/coins/bcb/historical/4578f2d6ab.jpg"
+    "obverseImage": "/coins/bcb/historical/4578f2d6ab.webp",
+    "reverseImage": "/coins/bcb/historical/4578f2d6ab.webp"
   },
   {
     "id": "ct-ms-cruzado-cz-vigente-de-28-2-1986-a-15-1-1989-ef47f3835a-moeda-cruzado--4dd859dae2",
@@ -112,8 +112,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 100,
     "denominationLabel": "Cz$ 100,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/4dd859dae2.jpg",
-    "reverseImage": "/coins/bcb/historical/4dd859dae2.jpg"
+    "obverseImage": "/coins/bcb/historical/4dd859dae2.webp",
+    "reverseImage": "/coins/bcb/historical/4dd859dae2.webp"
   },
   {
     "id": "ct-ms-cruzado-cz-vigente-de-28-2-1986-a-15-1-1989-ef47f3835a-moeda-cruzado--5051148a53",
@@ -122,8 +122,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 100,
     "denominationLabel": "Cz$ 100,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/5051148a53.jpg",
-    "reverseImage": "/coins/bcb/historical/5051148a53.jpg"
+    "obverseImage": "/coins/bcb/historical/5051148a53.webp",
+    "reverseImage": "/coins/bcb/historical/5051148a53.webp"
   },
   {
     "id": "ct-ms-cruzado-cz-vigente-de-28-2-1986-a-15-1-1989-ef47f3835a-moeda-cruzado--6605b7d5c1",
@@ -132,8 +132,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.5,
     "denominationLabel": "Cz$ 0,50",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/6605b7d5c1.jpg",
-    "reverseImage": "/coins/bcb/historical/6605b7d5c1.jpg"
+    "obverseImage": "/coins/bcb/historical/6605b7d5c1.webp",
+    "reverseImage": "/coins/bcb/historical/6605b7d5c1.webp"
   },
   {
     "id": "ct-ms-cruzado-cz-vigente-de-28-2-1986-a-15-1-1989-ef47f3835a-moeda-cruzado--6f4aff7039",
@@ -142,8 +142,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.1,
     "denominationLabel": "Cz$ 0,10",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/6f4aff7039.jpg",
-    "reverseImage": "/coins/bcb/historical/6f4aff7039.jpg"
+    "obverseImage": "/coins/bcb/historical/6f4aff7039.webp",
+    "reverseImage": "/coins/bcb/historical/6f4aff7039.webp"
   },
   {
     "id": "ct-ms-cruzado-cz-vigente-de-28-2-1986-a-15-1-1989-ef47f3835a-moeda-cruzado--90783757c9",
@@ -152,8 +152,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.2,
     "denominationLabel": "Cz$ 0,20",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/90783757c9.jpg",
-    "reverseImage": "/coins/bcb/historical/90783757c9.jpg"
+    "obverseImage": "/coins/bcb/historical/90783757c9.webp",
+    "reverseImage": "/coins/bcb/historical/90783757c9.webp"
   },
   {
     "id": "ct-ms-cruzado-cz-vigente-de-28-2-1986-a-15-1-1989-ef47f3835a-moeda-cruzado--9ba002aab8",
@@ -162,8 +162,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.05,
     "denominationLabel": "Cz$ 0,05",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/9ba002aab8.jpg",
-    "reverseImage": "/coins/bcb/historical/9ba002aab8.jpg"
+    "obverseImage": "/coins/bcb/historical/9ba002aab8.webp",
+    "reverseImage": "/coins/bcb/historical/9ba002aab8.webp"
   },
   {
     "id": "ct-ms-cruzado-cz-vigente-de-28-2-1986-a-15-1-1989-ef47f3835a-moeda-cruzado--a58cb5217c",
@@ -172,8 +172,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.01,
     "denominationLabel": "Cz$ 0,01",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/a58cb5217c.jpg",
-    "reverseImage": "/coins/bcb/historical/a58cb5217c.jpg"
+    "obverseImage": "/coins/bcb/historical/a58cb5217c.webp",
+    "reverseImage": "/coins/bcb/historical/a58cb5217c.webp"
   },
   {
     "id": "ct-ms-cruzado-novo-ncz-vigente-de-16-1-1989-a-15-3-1990-2a5318acb1-moeda-cr-0a1783e575",
@@ -182,8 +182,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 1,
     "denominationLabel": "NCz$ 1,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/0a1783e575.jpg",
-    "reverseImage": "/coins/bcb/historical/0a1783e575.jpg"
+    "obverseImage": "/coins/bcb/historical/0a1783e575.webp",
+    "reverseImage": "/coins/bcb/historical/0a1783e575.webp"
   },
   {
     "id": "ct-ms-cruzado-novo-ncz-vigente-de-16-1-1989-a-15-3-1990-2a5318acb1-moeda-cr-30fe839acf",
@@ -192,8 +192,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.1,
     "denominationLabel": "NCz$ 0,10",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/30fe839acf.jpg",
-    "reverseImage": "/coins/bcb/historical/30fe839acf.jpg"
+    "obverseImage": "/coins/bcb/historical/30fe839acf.webp",
+    "reverseImage": "/coins/bcb/historical/30fe839acf.webp"
   },
   {
     "id": "ct-ms-cruzado-novo-ncz-vigente-de-16-1-1989-a-15-3-1990-2a5318acb1-moeda-cr-c2a2134f19",
@@ -202,8 +202,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.05,
     "denominationLabel": "NCz$ 0,05",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/c2a2134f19.jpg",
-    "reverseImage": "/coins/bcb/historical/c2a2134f19.jpg"
+    "obverseImage": "/coins/bcb/historical/c2a2134f19.webp",
+    "reverseImage": "/coins/bcb/historical/c2a2134f19.webp"
   },
   {
     "id": "ct-ms-cruzado-novo-ncz-vigente-de-16-1-1989-a-15-3-1990-2a5318acb1-moeda-cr-e31a226356",
@@ -212,8 +212,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 200,
     "denominationLabel": "NCz$ 200,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/e31a226356.jpg",
-    "reverseImage": "/coins/bcb/historical/e31a226356.jpg"
+    "obverseImage": "/coins/bcb/historical/e31a226356.webp",
+    "reverseImage": "/coins/bcb/historical/e31a226356.webp"
   },
   {
     "id": "ct-ms-cruzado-novo-ncz-vigente-de-16-1-1989-a-15-3-1990-2a5318acb1-moeda-cr-f3bbaa4324",
@@ -222,8 +222,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.5,
     "denominationLabel": "NCz$ 0,50",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/f3bbaa4324.jpg",
-    "reverseImage": "/coins/bcb/historical/f3bbaa4324.jpg"
+    "obverseImage": "/coins/bcb/historical/f3bbaa4324.webp",
+    "reverseImage": "/coins/bcb/historical/f3bbaa4324.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-1-11-1942-a-12-12-1967-4a3cc69955-moeda-primei-42daab1806",
@@ -232,8 +232,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 10,
     "denominationLabel": "CR$ 10,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/42daab1806.jpg",
-    "reverseImage": "/coins/bcb/historical/42daab1806.jpg"
+    "obverseImage": "/coins/bcb/historical/42daab1806.webp",
+    "reverseImage": "/coins/bcb/historical/42daab1806.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-1-11-1942-a-12-12-1967-4a3cc69955-moeda-primei-47e0771d92",
@@ -242,8 +242,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 20,
     "denominationLabel": "Cr$ 20,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/47e0771d92.jpg",
-    "reverseImage": "/coins/bcb/historical/47e0771d92.jpg"
+    "obverseImage": "/coins/bcb/historical/47e0771d92.webp",
+    "reverseImage": "/coins/bcb/historical/47e0771d92.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-1-11-1942-a-12-12-1967-4a3cc69955-moeda-primei-a8b4234b9a",
@@ -252,8 +252,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 50,
     "denominationLabel": "CR$ 50,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/a8b4234b9a.jpg",
-    "reverseImage": "/coins/bcb/historical/a8b4234b9a.jpg"
+    "obverseImage": "/coins/bcb/historical/a8b4234b9a.webp",
+    "reverseImage": "/coins/bcb/historical/a8b4234b9a.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-0944a6c459",
@@ -262,8 +262,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 1,
     "denominationLabel": "Cr$ 1,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/0944a6c459.jpg",
-    "reverseImage": "/coins/bcb/historical/0944a6c459.jpg"
+    "obverseImage": "/coins/bcb/historical/0944a6c459.webp",
+    "reverseImage": "/coins/bcb/historical/0944a6c459.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-1a6d723857",
@@ -272,8 +272,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 1,
     "denominationLabel": "Cr$ 1,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/1a6d723857.jpg",
-    "reverseImage": "/coins/bcb/historical/1a6d723857.jpg"
+    "obverseImage": "/coins/bcb/historical/1a6d723857.webp",
+    "reverseImage": "/coins/bcb/historical/1a6d723857.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-266560b2bd",
@@ -282,8 +282,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 200,
     "denominationLabel": "Cr$ 200,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/266560b2bd.jpg",
-    "reverseImage": "/coins/bcb/historical/266560b2bd.jpg"
+    "obverseImage": "/coins/bcb/historical/266560b2bd.webp",
+    "reverseImage": "/coins/bcb/historical/266560b2bd.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-4b5fc47958",
@@ -292,8 +292,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 5,
     "denominationLabel": "CR$ 5,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/4b5fc47958.jpg",
-    "reverseImage": "/coins/bcb/historical/4b5fc47958.jpg"
+    "obverseImage": "/coins/bcb/historical/4b5fc47958.webp",
+    "reverseImage": "/coins/bcb/historical/4b5fc47958.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-4fbf34cc55",
@@ -302,8 +302,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 1,
     "denominationLabel": "Cr$ 1,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/4fbf34cc55.jpg",
-    "reverseImage": "/coins/bcb/historical/4fbf34cc55.jpg"
+    "obverseImage": "/coins/bcb/historical/4fbf34cc55.webp",
+    "reverseImage": "/coins/bcb/historical/4fbf34cc55.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-520370d926",
@@ -312,8 +312,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.01,
     "denominationLabel": "Cr$ 0,01",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/520370d926.jpg",
-    "reverseImage": "/coins/bcb/historical/520370d926.jpg"
+    "obverseImage": "/coins/bcb/historical/520370d926.webp",
+    "reverseImage": "/coins/bcb/historical/520370d926.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-627b2a743b",
@@ -322,8 +322,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.01,
     "denominationLabel": "Cr$ 0,01",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/627b2a743b.jpg",
-    "reverseImage": "/coins/bcb/historical/627b2a743b.jpg"
+    "obverseImage": "/coins/bcb/historical/627b2a743b.webp",
+    "reverseImage": "/coins/bcb/historical/627b2a743b.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-62a85ebc19",
@@ -332,8 +332,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.2,
     "denominationLabel": "Cr$ 0,20",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/62a85ebc19.jpg",
-    "reverseImage": "/coins/bcb/historical/62a85ebc19.jpg"
+    "obverseImage": "/coins/bcb/historical/62a85ebc19.webp",
+    "reverseImage": "/coins/bcb/historical/62a85ebc19.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-65cff038fc",
@@ -342,8 +342,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 10,
     "denominationLabel": "Cr$ 10,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/65cff038fc.jpg",
-    "reverseImage": "/coins/bcb/historical/65cff038fc.jpg"
+    "obverseImage": "/coins/bcb/historical/65cff038fc.webp",
+    "reverseImage": "/coins/bcb/historical/65cff038fc.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-668f386ad8",
@@ -352,8 +352,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 500,
     "denominationLabel": "Cr$ 500,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/668f386ad8.jpg",
-    "reverseImage": "/coins/bcb/historical/668f386ad8.jpg"
+    "obverseImage": "/coins/bcb/historical/668f386ad8.webp",
+    "reverseImage": "/coins/bcb/historical/668f386ad8.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-6cdeca1508",
@@ -362,8 +362,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 10,
     "denominationLabel": "CR$ 10,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/6cdeca1508.jpg",
-    "reverseImage": "/coins/bcb/historical/6cdeca1508.jpg"
+    "obverseImage": "/coins/bcb/historical/6cdeca1508.webp",
+    "reverseImage": "/coins/bcb/historical/6cdeca1508.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-7c56efa1cf",
@@ -372,8 +372,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.05,
     "denominationLabel": "Cr$ 0,05",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/7c56efa1cf.jpg",
-    "reverseImage": "/coins/bcb/historical/7c56efa1cf.jpg"
+    "obverseImage": "/coins/bcb/historical/7c56efa1cf.webp",
+    "reverseImage": "/coins/bcb/historical/7c56efa1cf.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-7cd505fc59",
@@ -382,8 +382,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 100,
     "denominationLabel": "CR$ 100,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/7cd505fc59.jpg",
-    "reverseImage": "/coins/bcb/historical/7cd505fc59.jpg"
+    "obverseImage": "/coins/bcb/historical/7cd505fc59.webp",
+    "reverseImage": "/coins/bcb/historical/7cd505fc59.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-820df31de3",
@@ -392,8 +392,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 20,
     "denominationLabel": "Cr$ 20,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/820df31de3.jpg",
-    "reverseImage": "/coins/bcb/historical/820df31de3.jpg"
+    "obverseImage": "/coins/bcb/historical/820df31de3.webp",
+    "reverseImage": "/coins/bcb/historical/820df31de3.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-884cf4a6b0",
@@ -402,8 +402,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.02,
     "denominationLabel": "Cr$ 0,02",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/884cf4a6b0.jpg",
-    "reverseImage": "/coins/bcb/historical/884cf4a6b0.jpg"
+    "obverseImage": "/coins/bcb/historical/884cf4a6b0.webp",
+    "reverseImage": "/coins/bcb/historical/884cf4a6b0.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-8a7b894b7f",
@@ -412,8 +412,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 50,
     "denominationLabel": "CR$ 50,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/8a7b894b7f.jpg",
-    "reverseImage": "/coins/bcb/historical/8a7b894b7f.jpg"
+    "obverseImage": "/coins/bcb/historical/8a7b894b7f.webp",
+    "reverseImage": "/coins/bcb/historical/8a7b894b7f.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-8e1710786c",
@@ -422,8 +422,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 1,
     "denominationLabel": "Cr$ 1,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/8e1710786c.jpg",
-    "reverseImage": "/coins/bcb/historical/8e1710786c.jpg"
+    "obverseImage": "/coins/bcb/historical/8e1710786c.webp",
+    "reverseImage": "/coins/bcb/historical/8e1710786c.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-985fbf3e15",
@@ -432,8 +432,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.05,
     "denominationLabel": "Cr$ 0,05",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/985fbf3e15.jpg",
-    "reverseImage": "/coins/bcb/historical/985fbf3e15.jpg"
+    "obverseImage": "/coins/bcb/historical/985fbf3e15.webp",
+    "reverseImage": "/coins/bcb/historical/985fbf3e15.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-98c15fac3b",
@@ -442,8 +442,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 20,
     "denominationLabel": "Cr$ 20,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/98c15fac3b.jpg",
-    "reverseImage": "/coins/bcb/historical/98c15fac3b.jpg"
+    "obverseImage": "/coins/bcb/historical/98c15fac3b.webp",
+    "reverseImage": "/coins/bcb/historical/98c15fac3b.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-9c5086b500",
@@ -452,8 +452,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.02,
     "denominationLabel": "Cr$ 0,02",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/9c5086b500.jpg",
-    "reverseImage": "/coins/bcb/historical/9c5086b500.jpg"
+    "obverseImage": "/coins/bcb/historical/9c5086b500.webp",
+    "reverseImage": "/coins/bcb/historical/9c5086b500.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-a0f824bddb",
@@ -462,8 +462,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.01,
     "denominationLabel": "Cr$ 0,01",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/a0f824bddb.jpg",
-    "reverseImage": "/coins/bcb/historical/a0f824bddb.jpg"
+    "obverseImage": "/coins/bcb/historical/a0f824bddb.webp",
+    "reverseImage": "/coins/bcb/historical/a0f824bddb.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-d97ee29c9f",
@@ -472,8 +472,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.1,
     "denominationLabel": "Cr$ 0,10",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/d97ee29c9f.jpg",
-    "reverseImage": "/coins/bcb/historical/d97ee29c9f.jpg"
+    "obverseImage": "/coins/bcb/historical/d97ee29c9f.webp",
+    "reverseImage": "/coins/bcb/historical/d97ee29c9f.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-e5c4f7d6c4",
@@ -482,8 +482,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 300,
     "denominationLabel": "Cr$ 300,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/e5c4f7d6c4.jpg",
-    "reverseImage": "/coins/bcb/historical/e5c4f7d6c4.jpg"
+    "obverseImage": "/coins/bcb/historical/e5c4f7d6c4.webp",
+    "reverseImage": "/coins/bcb/historical/e5c4f7d6c4.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-f17fe797bf",
@@ -492,8 +492,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 5,
     "denominationLabel": "CR$ 5,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/f17fe797bf.jpg",
-    "reverseImage": "/coins/bcb/historical/f17fe797bf.jpg"
+    "obverseImage": "/coins/bcb/historical/f17fe797bf.webp",
+    "reverseImage": "/coins/bcb/historical/f17fe797bf.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-15-5-1970-a-27-2-1986-9ac1336eed-moeda-cruzeir-fb910dcb52",
@@ -502,8 +502,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.5,
     "denominationLabel": "Cr$ 0,50",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/fb910dcb52.jpg",
-    "reverseImage": "/coins/bcb/historical/fb910dcb52.jpg"
+    "obverseImage": "/coins/bcb/historical/fb910dcb52.webp",
+    "reverseImage": "/coins/bcb/historical/fb910dcb52.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-16-3-1990-a-31-7-1993-f41e5d208c-moeda-cruzeir-14c69e18f8",
@@ -512,8 +512,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 10,
     "denominationLabel": "CR$ 10,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/14c69e18f8.jpg",
-    "reverseImage": "/coins/bcb/historical/14c69e18f8.jpg"
+    "obverseImage": "/coins/bcb/historical/14c69e18f8.webp",
+    "reverseImage": "/coins/bcb/historical/14c69e18f8.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-16-3-1990-a-31-7-1993-f41e5d208c-moeda-cruzeir-4326476a44",
@@ -522,8 +522,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 500,
     "denominationLabel": "Cr$ 500,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/4326476a44.jpg",
-    "reverseImage": "/coins/bcb/historical/4326476a44.jpg"
+    "obverseImage": "/coins/bcb/historical/4326476a44.webp",
+    "reverseImage": "/coins/bcb/historical/4326476a44.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-16-3-1990-a-31-7-1993-f41e5d208c-moeda-cruzeir-460dd96c17",
@@ -532,8 +532,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 50,
     "denominationLabel": "CR$ 50,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/460dd96c17.jpg",
-    "reverseImage": "/coins/bcb/historical/460dd96c17.jpg"
+    "obverseImage": "/coins/bcb/historical/460dd96c17.webp",
+    "reverseImage": "/coins/bcb/historical/460dd96c17.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-16-3-1990-a-31-7-1993-f41e5d208c-moeda-cruzeir-8d2319f323",
@@ -542,8 +542,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 1000,
     "denominationLabel": "Cr$ 1000,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/8d2319f323.jpg",
-    "reverseImage": "/coins/bcb/historical/8d2319f323.jpg"
+    "obverseImage": "/coins/bcb/historical/8d2319f323.webp",
+    "reverseImage": "/coins/bcb/historical/8d2319f323.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-16-3-1990-a-31-7-1993-f41e5d208c-moeda-cruzeir-8e2fe3f7e1",
@@ -552,8 +552,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 500,
     "denominationLabel": "Cr$ 500,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/8e2fe3f7e1.jpg",
-    "reverseImage": "/coins/bcb/historical/8e2fe3f7e1.jpg"
+    "obverseImage": "/coins/bcb/historical/8e2fe3f7e1.webp",
+    "reverseImage": "/coins/bcb/historical/8e2fe3f7e1.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-16-3-1990-a-31-7-1993-f41e5d208c-moeda-cruzeir-9b8da9e573",
@@ -562,8 +562,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 100,
     "denominationLabel": "CR$ 100,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/9b8da9e573.jpg",
-    "reverseImage": "/coins/bcb/historical/9b8da9e573.jpg"
+    "obverseImage": "/coins/bcb/historical/9b8da9e573.webp",
+    "reverseImage": "/coins/bcb/historical/9b8da9e573.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-16-3-1990-a-31-7-1993-f41e5d208c-moeda-cruzeir-9cee750803",
@@ -572,8 +572,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 2000,
     "denominationLabel": "Cr$ 2000,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/9cee750803.jpg",
-    "reverseImage": "/coins/bcb/historical/9cee750803.jpg"
+    "obverseImage": "/coins/bcb/historical/9cee750803.webp",
+    "reverseImage": "/coins/bcb/historical/9cee750803.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-16-3-1990-a-31-7-1993-f41e5d208c-moeda-cruzeir-c729de8636",
@@ -582,8 +582,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 5000,
     "denominationLabel": "Cr$ 5000,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/c729de8636.jpg",
-    "reverseImage": "/coins/bcb/historical/c729de8636.jpg"
+    "obverseImage": "/coins/bcb/historical/c729de8636.webp",
+    "reverseImage": "/coins/bcb/historical/c729de8636.webp"
   },
   {
     "id": "ct-ms-cruzeiro-cr-vigente-de-16-3-1990-a-31-7-1993-f41e5d208c-moeda-cruzeir-e946ebdab3",
@@ -592,8 +592,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 5,
     "denominationLabel": "CR$ 5,00",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/e946ebdab3.jpg",
-    "reverseImage": "/coins/bcb/historical/e946ebdab3.jpg"
+    "obverseImage": "/coins/bcb/historical/e946ebdab3.webp",
+    "reverseImage": "/coins/bcb/historical/e946ebdab3.webp"
   },
   {
     "id": "ct-ms-cruzeiro-novo-ncr-vigente-de-13-12-1967-a-14-5-1970-46447fa4c1-moeda--4174367596",
@@ -602,8 +602,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.5,
     "denominationLabel": "Cr$ 0,50",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/4174367596.jpg",
-    "reverseImage": "/coins/bcb/historical/4174367596.jpg"
+    "obverseImage": "/coins/bcb/historical/4174367596.webp",
+    "reverseImage": "/coins/bcb/historical/4174367596.webp"
   },
   {
     "id": "ct-ms-cruzeiro-novo-ncr-vigente-de-13-12-1967-a-14-5-1970-46447fa4c1-moeda--7e06647dea",
@@ -612,8 +612,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.1,
     "denominationLabel": "NCr$ 0,10",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/7e06647dea.jpg",
-    "reverseImage": "/coins/bcb/historical/7e06647dea.jpg"
+    "obverseImage": "/coins/bcb/historical/7e06647dea.webp",
+    "reverseImage": "/coins/bcb/historical/7e06647dea.webp"
   },
   {
     "id": "ct-ms-cruzeiro-novo-ncr-vigente-de-13-12-1967-a-14-5-1970-46447fa4c1-moeda--89bba21aec",
@@ -622,8 +622,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.02,
     "denominationLabel": "NCr$ 0,02",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/89bba21aec.jpg",
-    "reverseImage": "/coins/bcb/historical/89bba21aec.jpg"
+    "obverseImage": "/coins/bcb/historical/89bba21aec.webp",
+    "reverseImage": "/coins/bcb/historical/89bba21aec.webp"
   },
   {
     "id": "ct-ms-cruzeiro-novo-ncr-vigente-de-13-12-1967-a-14-5-1970-46447fa4c1-moeda--a06a0faf32",
@@ -632,8 +632,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.2,
     "denominationLabel": "NCr$ 0,20",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/a06a0faf32.jpg",
-    "reverseImage": "/coins/bcb/historical/a06a0faf32.jpg"
+    "obverseImage": "/coins/bcb/historical/a06a0faf32.webp",
+    "reverseImage": "/coins/bcb/historical/a06a0faf32.webp"
   },
   {
     "id": "ct-ms-cruzeiro-novo-ncr-vigente-de-13-12-1967-a-14-5-1970-46447fa4c1-moeda--c792c56fe5",
@@ -642,8 +642,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.01,
     "denominationLabel": "R$ 0,01",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/c792c56fe5.jpg",
-    "reverseImage": "/coins/bcb/historical/c792c56fe5.jpg"
+    "obverseImage": "/coins/bcb/historical/c792c56fe5.webp",
+    "reverseImage": "/coins/bcb/historical/c792c56fe5.webp"
   },
   {
     "id": "ct-ms-cruzeiro-novo-ncr-vigente-de-13-12-1967-a-14-5-1970-46447fa4c1-moeda--d87887582d",
@@ -652,8 +652,8 @@ export const historicalCatalog: Catalog = {
     "denomination": 0.05,
     "denominationLabel": "NCr$ 0,05",
     "commemorative": false,
-    "obverseImage": "/coins/bcb/historical/d87887582d.jpg",
-    "reverseImage": "/coins/bcb/historical/d87887582d.jpg"
+    "obverseImage": "/coins/bcb/historical/d87887582d.webp",
+    "reverseImage": "/coins/bcb/historical/d87887582d.webp"
   }
 ],
   coinIssues: [

@@ -32,5 +32,5 @@ test("PWA aceita todas as orientações e atualiza o shell visual offline", asyn
   assert.equal(manifest.orientation, "any");
   assert.ok(manifest.display_override.includes("standalone"));
   assert.equal(manifest.theme_color, "#f4f7fb");
-  assert.match(worker, /v13-20260724-interface-ios26/);
+  assert.match(worker, /v14-20260724-auditoria/);
 });

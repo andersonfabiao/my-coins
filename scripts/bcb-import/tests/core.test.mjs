@@ -19,7 +19,7 @@ const capture = {
       title: "1 Real",
       monetarySystem: "Real (1994 - atual)",
       family: "2ª Família",
-      imageUrl: "/content/moeda.jpg",
+      imageUrl: "/content/moeda.webp",
       fields: {
         "Valor facial": "R$ 1,00",
         "Diâmetro(mm)": "27,0",

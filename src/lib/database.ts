@@ -27,6 +27,7 @@ let memory: FallbackData = {
 };
 let storageLoaded = false;
 let indexedDbAvailable = true;
+let databasePromise: Promise<IDBDatabase> | null = null;
 
 function loadFallback() {
   if (storageLoaded || typeof window === "undefined") return;
@@ -65,11 +66,13 @@ function persistFallback() {
 
 function disableIndexedDb(error: unknown) {
   indexedDbAvailable = false;
+  databasePromise = null;
   if (process.env.NODE_ENV === "development") console.warn("[indexedDB] Indisponível; usando armazenamento seguro alternativo.", error);
 }
 
 function openDatabase(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
+  if (databasePromise) return databasePromise;
+  databasePromise = new Promise((resolve, reject) => {
     try {
       if (typeof window === "undefined" || !("indexedDB" in window)) {
         reject(new Error("IndexedDB indisponível"));
@@ -103,13 +106,27 @@ function openDatabase(): Promise<IDBDatabase> {
 
         meta?.put(COLLECTION_SCHEMA_VERSION, "collectionSchemaVersion");
       };
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error ?? new Error("Falha ao abrir IndexedDB"));
-      request.onblocked = () => reject(new Error("Atualização do IndexedDB bloqueada"));
+      request.onsuccess = () => {
+        request.result.onversionchange = () => {
+          request.result.close();
+          databasePromise = null;
+        };
+        resolve(request.result);
+      };
+      request.onerror = () => {
+        databasePromise = null;
+        reject(request.error ?? new Error("Falha ao abrir IndexedDB"));
+      };
+      request.onblocked = () => {
+        databasePromise = null;
+        reject(new Error("Atualização do IndexedDB bloqueada"));
+      };
     } catch (error) {
+      databasePromise = null;
       reject(error);
     }
   });
+  return databasePromise;
 }
 
 async function transaction<T>(
@@ -125,23 +142,34 @@ async function transaction<T>(
       const request = operation(tx.objectStore(storeName));
       request.onsuccess = () => { result = request.result; };
       request.onerror = () => reject(request.error ?? new Error("Falha na operação IndexedDB"));
-      tx.oncomplete = () => {
-        db.close();
-        resolve(result);
-      };
-      tx.onerror = () => {
-        db.close();
-        reject(tx.error ?? new Error("Falha na transação IndexedDB"));
-      };
-      tx.onabort = () => {
-        db.close();
-        reject(tx.error ?? new Error("Transação IndexedDB cancelada"));
-      };
+      tx.oncomplete = () => resolve(result);
+      tx.onerror = () => reject(tx.error ?? new Error("Falha na transação IndexedDB"));
+      tx.onabort = () => reject(tx.error ?? new Error("Transação IndexedDB cancelada"));
     } catch (error) {
-      db.close();
       reject(error);
     }
   });
+}
+
+async function writeItems(items: CollectionItem[], clearFirst: boolean) {
+  const migrated = migrateCollectionItems(items);
+  await tryIndexedDb(async () => {
+    const db = await openDatabase();
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(COLLECTION_STORE, "readwrite");
+      const store = tx.objectStore(COLLECTION_STORE);
+      if (clearFirst) store.clear();
+      for (const item of migrated) store.put({ ...item, schemaVersion: COLLECTION_SCHEMA_VERSION });
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error ?? new Error("Falha ao gravar coleção"));
+      tx.onabort = () => reject(tx.error ?? new Error("Gravação da coleção cancelada"));
+    });
+  }, () => undefined);
+  const current = clearFirst ? new Map<string, CollectionItem>() : new Map(memory.items.map((item) => [item.coinId, item]));
+  for (const item of migrated) current.set(item.coinId, item);
+  memory.items = [...current.values()];
+  persistFallback();
+  return memory.items;
 }
 
 async function tryIndexedDb<T>(operation: () => Promise<T>, fallback: () => T | Promise<T>): Promise<T> {
@@ -180,13 +208,11 @@ export const repository = {
     persistFallback();
     return migrated;
   },
-  async remove(id: string) {
-    await tryIndexedDb(
-      () => transaction<undefined>(COLLECTION_STORE, "readwrite", (store) => store.delete(id)),
-      () => undefined,
-    );
-    memory.items = memory.items.filter((item) => item.coinId !== id);
-    persistFallback();
+  replaceAll(items: CollectionItem[]) {
+    return writeItems(items, true);
+  },
+  mergeAll(items: CollectionItem[]) {
+    return writeItems(items, false);
   },
   async clear() {
     await tryIndexedDb(

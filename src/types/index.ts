@@ -105,4 +105,13 @@ export interface BackupV3 {
   settings: Settings;
 }
 
-export type Backup = BackupV1 | BackupV2 | BackupV3;
+export interface BackupV4 {
+  version: 4;
+  collectionSchemaVersion: 3;
+  exportedAt: string;
+  itemCount: number;
+  items: CollectionItem[];
+  settings: Settings;
+}
+
+export type Backup = BackupV1 | BackupV2 | BackupV3 | BackupV4;

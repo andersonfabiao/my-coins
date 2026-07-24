@@ -38,6 +38,7 @@ export default function Settings() {
 
   async function read(file: File) {
     try {
+      if (file.size > 20 * 1024 * 1024) throw new Error("O backup excede o limite de 20 MB.");
       setPending(parseBackup(JSON.parse(await readFile(file))));
       setMessage("");
     } catch (error) {
@@ -79,7 +80,7 @@ export default function Settings() {
           <button onClick={exportData}><Download /> Exportar JSON</button>
           <button onClick={() => input.current?.click()}><Upload /> Importar JSON</button>
         </div>
-        <input className="srOnly" ref={input} type="file" accept="application/json" onChange={(event) => {
+        <input className="srOnly" ref={input} type="file" accept="application/json" aria-label="Selecionar arquivo de backup JSON" onChange={(event) => {
           const file = event.target.files?.[0];
           if (file) void read(file);
         }} />

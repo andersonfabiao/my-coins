@@ -18,9 +18,9 @@ export async function loadCapture(file) {
 
 function safeImageName(entry, contentType) {
   const urlExt = extname(new URL(entry.sourceUrl).pathname).toLowerCase();
-  const allowed = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif"]);
+  const allowed = new Set([".webp", ".jpeg", ".png", ".webp", ".gif"]);
   const typeExt = {
-    "image/jpeg": ".jpg",
+    "image/jpeg": ".webp",
     "image/png": ".png",
     "image/webp": ".webp",
     "image/gif": ".gif",

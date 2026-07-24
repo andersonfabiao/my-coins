@@ -51,7 +51,7 @@ test("recupera quantidade padrão de registros anteriores ao campo quantity", ()
   assert.equal(missing.owned, false);
 });
 
-test("lê backup V1 e converte para V3 sem perder dados", () => {
+test("lê backup V1 e converte para V4 sem perder dados", () => {
   const backupV1 = {
     version: 1,
     exportedAt: "2025-01-02T03:04:05.000Z",
@@ -67,7 +67,7 @@ test("lê backup V1 e converte para V3 sem perder dados", () => {
   };
 
   const migrated = migrations.migrateBackup(backupV1);
-  assert.equal(migrated.version, 3);
+  assert.equal(migrated.version, 4);
   assert.equal(migrated.collectionSchemaVersion, 3);
   assert.equal(migrated.exportedAt, backupV1.exportedAt);
   assert.deepEqual(migrated.settings, backupV1.settings);
@@ -78,7 +78,7 @@ test("lê backup V1 e converte para V3 sem perder dados", () => {
   assert.equal(migrated.items[0].personalNotes, "Backup antigo");
 });
 
-test("lê backup V2 e converte para V3 preservando todos os campos pessoais", () => {
+test("lê backup V2 e converte para V4 preservando todos os campos pessoais", () => {
   const backupV2 = {
     version: 2,
     collectionSchemaVersion: 2,
@@ -97,7 +97,7 @@ test("lê backup V2 e converte para V3 preservando todos os campos pessoais", ()
   };
 
   const migrated = migrations.migrateBackup(backupV2);
-  assert.equal(migrated.version, 3);
+  assert.equal(migrated.version, 4);
   assert.equal(migrated.collectionSchemaVersion, 3);
   assert.deepEqual(migrated.items[0], {
     ...backupV2.items[0],
@@ -107,7 +107,7 @@ test("lê backup V2 e converte para V3 preservando todos os campos pessoais", ()
   });
 });
 
-test("lê backup V3 preservando os recursos avançados", () => {
+test("lê backup V3 e converte para V4 preservando os recursos avançados", () => {
   const item = {
     coinId: "real-1-2024",
     owned: true,
@@ -129,7 +129,31 @@ test("lê backup V3 preservando os recursos avançados", () => {
     items: [item],
   };
 
-  assert.deepEqual(migrations.migrateBackup(backupV3), backupV3);
+  assert.deepEqual(migrations.migrateBackup(backupV3), {
+    ...backupV3,
+    version: 4,
+    itemCount: 1,
+  });
+});
+
+test("backup V4 consolida IDs duplicados e valida a contagem", () => {
+  const base = {
+    coinId: "real-1-2024",
+    owned: true,
+    quantity: 1,
+    updatedAt: "2026-07-24T12:00:00.000Z",
+  };
+  const migrated = migrations.migrateBackup({
+    version: 4,
+    collectionSchemaVersion: 3,
+    exportedAt: "2026-07-24T12:00:00.000Z",
+    itemCount: 2,
+    settings: { theme: "system", view: "list" },
+    items: [base, { ...base, quantity: 3 }],
+  });
+  assert.equal(migrated.version, 4);
+  assert.equal(migrated.itemCount, 1);
+  assert.equal(migrated.items[0].quantity, 3);
 });
 
 test("rejeita versões desconhecidas e backups sem itens válidos", () => {
@@ -151,11 +175,16 @@ test("IndexedDB mantém keyPath e executa upgrade versionado", async () => {
   assert.match(database, /openCursor\(\)/);
   assert.match(database, /cursor\.update\(\{ \.\.\.migrated, schemaVersion: COLLECTION_SCHEMA_VERSION \}\)/);
   assert.match(database, /meta\?\.put\(COLLECTION_SCHEMA_VERSION, "collectionSchemaVersion"\)/);
+  assert.match(database, /let databasePromise/);
+  assert.match(database, /replaceAll/);
+  assert.match(database, /mergeAll/);
 });
 
-test("exportação usa V3 e restore delega à migração compatível", async () => {
+test("exportação usa V4, ordena itens e restore delega à migração compatível", async () => {
   const backup = await readFile(path.join(root, "src", "lib", "backup.ts"), "utf8");
-  assert.match(backup, /version: 3/);
+  assert.match(backup, /version: 4/);
+  assert.match(backup, /itemCount: items\.length/);
+  assert.match(backup, /localeCompare/);
   assert.match(backup, /collectionSchemaVersion: COLLECTION_SCHEMA_VERSION/);
   assert.match(backup, /return migrateBackup\(value\)/);
 });
