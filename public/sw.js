@@ -1,8 +1,8 @@
 const CACHE_PREFIX = "minha-colecao-";
-const CACHE = `${CACHE_PREFIX}v11-20260724-colecao-avancada`;
+const CACHE = `${CACHE_PREFIX}v12-20260724-painel-estatistico`;
 const BASE = new URL("./", self.location.href).pathname.replace(/\/$/, "");
 const withBase = (path) => `${BASE}${path}`;
-const CORE = ["/", "/catalogo/", "/colecao/", "/faltantes/", "/ajustes/", "/offline.html", "/manifest.webmanifest"].map(withBase);
+const CORE = ["/", "/catalogo/", "/colecao/", "/faltantes/", "/estatisticas/", "/ajustes/", "/offline.html", "/manifest.webmanifest"].map(withBase);
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
