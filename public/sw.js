@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "minha-colecao-";
-const CACHE = `${CACHE_PREFIX}v12-20260724-painel-estatistico`;
+const CACHE = `${CACHE_PREFIX}v13-20260724-interface-ios26`;
 const BASE = new URL("./", self.location.href).pathname.replace(/\/$/, "");
 const withBase = (path) => `${BASE}${path}`;
 const CORE = ["/", "/catalogo/", "/colecao/", "/faltantes/", "/estatisticas/", "/ajustes/", "/offline.html", "/manifest.webmanifest"].map(withBase);
