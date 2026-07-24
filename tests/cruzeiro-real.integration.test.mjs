@@ -47,7 +47,7 @@ test("PWA inclui shell offline e versão de cache da expansão", async () => {
     readFile(path.join(root, "public", "manifest.webmanifest"), "utf8"),
     readFile(path.join(root, "public", "offline.html"), "utf8"),
   ]);
-  assert.match(serviceWorker, /v9-20260724-cruzeiro-real/);
+  assert.match(serviceWorker, /v10-20260724-todos-padroes/);
   assert.match(serviceWorker, /networkFirst/);
   assert.match(serviceWorker, /cacheFirst/);
   assert.match(manifest, /moedas brasileiras/);

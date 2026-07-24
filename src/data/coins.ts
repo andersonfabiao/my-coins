@@ -2,6 +2,7 @@ import type { CoinCatalogSource } from "@/domain/catalog";
 import { officialImagesFor } from "@/data/coin-images";
 import { createCatalog, createCatalogEntries, createCatalogEntryIndex, mergeCatalogs } from "@/domain/catalog";
 import { cruzeiroRealCatalog } from "@/data/cruzeiro-real";
+import { historicalCatalog, historicalFamilyNames } from "@/data/historical-import";
 
 const SECOND_FAMILY_MATERIALS: Record<CoinCatalogSource["denomination"], string> = {
   0.01: "Aço revestido de cobre",
@@ -332,7 +333,17 @@ const commemoratives: CoinCatalogSource[] = [
 const realCatalogSources: CoinCatalogSource[] = [...firstFamily, ...secondFamily, ...commemoratives]
   .map((coin) => ({ ...coin, ...officialImagesFor(coin) }));
 
-export const catalog = mergeCatalogs(createCatalog(realCatalogSources), cruzeiroRealCatalog);
+const combinedCatalog = mergeCatalogs(
+  createCatalog(realCatalogSources),
+  cruzeiroRealCatalog,
+  historicalCatalog,
+);
+export const catalog = {
+  ...combinedCatalog,
+  monetarySystems: [...combinedCatalog.monetarySystems].sort((a, b) =>
+    b.validFrom.localeCompare(a.validFrom),
+  ),
+};
 export const catalogEntries = createCatalogEntries(catalog);
 
 export const familyNames: Record<string, string> = {
@@ -340,6 +351,7 @@ export const familyNames: Record<string, string> = {
   "segunda-familia": "Segunda Família",
   comemorativa: "Comemorativas",
   "cruzeiro-real-circulacao": "Moedas de circulação",
+  ...historicalFamilyNames,
 };
 
 export const getCatalogEntry = createCatalogEntryIndex(catalogEntries);

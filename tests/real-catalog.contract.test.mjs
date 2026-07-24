@@ -100,7 +100,7 @@ test("toda a aplicação usa o modelo híbrido e preserva a emissão como unidad
   assert.match(domain, /return\s*\{\s*id,\s*coinTypeId:/);
   assert.match(domain, /export function createCatalogEntries\(catalog:\s*Catalog\)/);
   assert.match(domain, /return\s*\{\s*monetarySystem,\s*coinType,\s*coinIssue\s*\}/);
-  assert.match(data, /mergeCatalogs\(createCatalog\(realCatalogSources\), cruzeiroRealCatalog\)/);
+  assert.match(data, /mergeCatalogs\([\s\S]*createCatalog\(realCatalogSources\),[\s\S]*cruzeiroRealCatalog,[\s\S]*historicalCatalog/);
   assert.match(data, /export const catalogEntries = createCatalogEntries\(catalog\)/);
   assert.match(data, /export const getCatalogEntry = createCatalogEntryIndex\(catalogEntries\)/);
 });

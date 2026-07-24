@@ -62,7 +62,9 @@ function productionRows(raw) {
     "data da moeda",
     "tiragem",
   );
-  const years = [...production.matchAll(/(18|19|20)\d{2}(?=\s*\/)/g)].map(
+  const years = [
+    ...production.matchAll(/(18|19|20)\d{2}(?=\s*\/|\s+[A-Za-z])/g),
+  ].map(
     (match) => match[0],
   );
   return [...new Set(years)].map((year) => ({
@@ -128,11 +130,17 @@ export function normalizeCapture(capture) {
       });
     } else {
       for (const row of rows) {
-        const nearby = row.raw.match(
-          new RegExp(
-            `${row.year}\\s*\\/\\s*[^/]+\\/\\s*(\\d{1,3}(?:\\.\\d{3})+)`,
-          ),
-        );
+        const nearby =
+          row.raw.match(
+            new RegExp(
+              `${row.year}\\s*\\/\\s*[^/]+\\/\\s*(\\d{1,3}(?:\\.\\d{3})+)`,
+            ),
+          ) ??
+          row.raw.match(
+            new RegExp(
+              `${row.year}\\s+[A-Za-z][A-Za-z0-9-]*\\s+(\\d{1,3}(?:\\.\\d{3})+)`,
+            ),
+          );
         issues.push({
           id: stableId("ci", typeId, String(row.year)),
           coinTypeId: typeId,
