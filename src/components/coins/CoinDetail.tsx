@@ -5,16 +5,17 @@ import Image from "next/image";
 import { ArrowLeft, Check, Plus } from "lucide-react";
 import { familyNames } from "@/data/coins";
 import { useCollection } from "@/context/CollectionContext";
-import { formatFaceValue, formatMintage } from "@/lib/formatting";
-import type { Coin, Condition } from "@/types";
+import { formatMintage } from "@/lib/formatting";
+import type { CatalogEntry, Condition } from "@/types";
 
-export function CoinDetail({ coin }: { coin: Coin }) {
+export function CoinDetail({ entry }: { entry: CatalogEntry }) {
+  const { coinIssue, coinType } = entry;
   const { items, save, toggle } = useCollection();
-  const item = items.get(coin.id);
+  const item = items.get(coinIssue.id);
   const owned = item?.owned ?? false;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const update = (values: Partial<NonNullable<typeof item>>) => void save({
-    coinId: coin.id,
+    coinId: coinIssue.id,
     owned: true,
     quantity: 1,
     updatedAt: new Date().toISOString(),
@@ -24,32 +25,36 @@ export function CoinDetail({ coin }: { coin: Coin }) {
 
   return (
     <>
-      <Link className="back" href="/catalogo/"><ArrowLeft /> Catálogo</Link>
+      <Link className="back" href={`/catalogo/?pais=brasil&padrao=${entry.monetarySystem.id}&familia=${coinType.family}&tipo=${coinType.id}`}><ArrowLeft /> Emissões</Link>
       <section className="detailHero">
-        {coin.obverseImage && coin.reverseImage ? (
+        {coinType.obverseImage && coinType.reverseImage && coinType.obverseImage !== coinType.reverseImage ? (
           <div className="coinFaces">
-            <figure><Image src={`${basePath}${coin.obverseImage}`} alt={`Anverso de ${coin.title}`} width={320} height={320} /><figcaption>Anverso</figcaption></figure>
-            <figure><Image src={`${basePath}${coin.reverseImage}`} alt={`Reverso de ${coin.title}`} width={320} height={320} /><figcaption>Reverso</figcaption></figure>
+            <figure><Image src={`${basePath}${coinType.obverseImage}`} alt={`Anverso de ${coinIssue.title}`} width={320} height={320} /><figcaption>Anverso</figcaption></figure>
+            <figure><Image src={`${basePath}${coinType.reverseImage}`} alt={`Reverso de ${coinIssue.title}`} width={320} height={320} /><figcaption>Reverso</figcaption></figure>
           </div>
-        ) : <div className="bigCoin"><strong>{formatFaceValue(coin.denomination)}</strong></div>}
-        <p>{familyNames[coin.family]}</p>
-        <h1>{coin.title}</h1>
-        <span>{coin.subtitle}</span>
+        ) : coinType.obverseImage || coinType.reverseImage ? (
+          <div className="coinFaces">
+            <figure><Image src={`${basePath}${coinType.obverseImage ?? coinType.reverseImage}`} alt={`Anverso e reverso de ${coinIssue.title}`} width={640} height={320} /><figcaption>Anverso e reverso</figcaption></figure>
+          </div>
+        ) : <div className="bigCoin"><strong>{coinType.denominationLabel}</strong></div>}
+        <p>{familyNames[coinType.family] ?? coinType.family}</p>
+        <h1>{coinIssue.title}</h1>
+        <span>{coinIssue.subtitle}</span>
       </section>
-      <button className={`collectionButton ${owned ? "owned" : ""}`} onClick={() => void toggle(coin.id)}>
+      <button className={`collectionButton ${owned ? "owned" : ""}`} onClick={() => void toggle(coinIssue.id)}>
         {owned ? <><Check /> Na minha coleção</> : <><Plus /> Adicionar à coleção</>}
       </button>
       <section className="detailSection">
         <h2>Sobre esta moeda</h2>
         <dl>
-          <div><dt>Valor</dt><dd>{formatFaceValue(coin.denomination)}</dd></div>
-          <div><dt>Ano</dt><dd>{coin.year}</dd></div>
-          <div><dt>Material</dt><dd>{coin.material ?? "A confirmar"}</dd></div>
-          <div><dt>Tiragem</dt><dd>{formatMintage(coin.mintage)}</dd></div>
-          <div><dt>Peso</dt><dd>{coin.weightGrams ? `${coin.weightGrams.toLocaleString("pt-BR")} g` : "A confirmar"}</dd></div>
-          <div><dt>Diâmetro</dt><dd>{coin.diameterMm ? `${coin.diameterMm.toLocaleString("pt-BR")} mm` : "A confirmar"}</dd></div>
+          <div><dt>Valor</dt><dd>{coinType.denominationLabel}</dd></div>
+          <div><dt>Ano</dt><dd>{coinIssue.year}</dd></div>
+          <div><dt>Material</dt><dd>{coinIssue.material ?? "A confirmar"}</dd></div>
+          <div><dt>Tiragem</dt><dd>{formatMintage(coinIssue.mintage)}</dd></div>
+          <div><dt>Peso</dt><dd>{coinIssue.weightGrams ? `${coinIssue.weightGrams.toLocaleString("pt-BR")} g` : "A confirmar"}</dd></div>
+          <div><dt>Diâmetro</dt><dd>{coinIssue.diameterMm ? `${coinIssue.diameterMm.toLocaleString("pt-BR")} mm` : "A confirmar"}</dd></div>
         </dl>
-        {coin.notes && <p>{coin.notes}</p>}
+        {coinIssue.notes && <p>{coinIssue.notes}</p>}
       </section>
       {owned && (
         <section className="detailSection editor">

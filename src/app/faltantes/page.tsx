@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { Copy, Search, Share2 } from "lucide-react";
 import { Header } from "@/components/ui/Header";
 import { CoinGroups } from "@/components/coins/CoinGroups";
-import { coins } from "@/data/coins";
+import { catalogEntries } from "@/data/coins";
 import { formatFaceValue } from "@/lib/formatting";
 import { useCollection } from "@/context/CollectionContext";
 
@@ -12,12 +12,12 @@ export default function Missing() {
   const { items } = useCollection();
   const [notice, setNotice] = useState("");
   const [query, setQuery] = useState("");
-  const missing = useMemo(() => coins.filter((coin) => !items.get(coin.id)?.owned), [items]);
-  const shown = missing.filter((coin) =>
-    [coin.title, coin.subtitle, coin.theme, coin.year, coin.denominationLabel]
+  const missing = useMemo(() => catalogEntries.filter(({ coinIssue }) => !items.get(coinIssue.id)?.owned), [items]);
+  const shown = missing.filter(({ coinIssue, coinType }) =>
+    [coinIssue.title, coinIssue.subtitle, coinIssue.theme, coinIssue.year, coinType.denominationLabel]
       .join(" ").toLowerCase().includes(query.toLowerCase())
   );
-  const text = `Moedas que faltam na minha coleção:\n${missing.map((coin) => `• ${formatFaceValue(coin.denomination)} · ${coin.title}`).join("\n")}`;
+  const text = `Moedas que faltam na minha coleção:\n${missing.map(({ coinIssue, coinType }) => `• ${formatFaceValue(coinType.denomination)} · ${coinIssue.title}`).join("\n")}`;
 
   async function copy() {
     try {
@@ -67,7 +67,7 @@ export default function Missing() {
         </div>
       </div>
       {notice && <p className="notice" role="status">{notice}</p>}
-      <CoinGroups coins={shown} />
+      <CoinGroups entries={shown} />
     </>
   );
 }

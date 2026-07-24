@@ -1,7 +1,7 @@
 {
   "name": "Minha Coleção de Moedas",
   "short_name": "Minha Coleção",
-  "description": "Catálogo pessoal de moedas do Real Brasileiro",
+  "description": "Catálogo pessoal de moedas brasileiras",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

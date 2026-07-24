@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "minha-colecao-";
-const CACHE = `${CACHE_PREFIX}v8-20260723-fao-quantity`;
+const CACHE = `${CACHE_PREFIX}v9-20260724-cruzeiro-real`;
 const BASE = new URL("./", self.location.href).pathname.replace(/\/$/, "");
 const withBase = (path) => `${BASE}${path}`;
 const CORE = ["/", "/catalogo/", "/colecao/", "/faltantes/", "/ajustes/", "/offline.html", "/manifest.webmanifest"].map(withBase);

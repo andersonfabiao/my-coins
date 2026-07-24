@@ -1,46 +1,32 @@
 import type { CollectionItem, Settings } from "@/types";
+import {
+  COLLECTION_SCHEMA_VERSION,
+  isSettings,
+  migrateCollectionItem,
+  migrateCollectionItems,
+} from "@/lib/collection-migrations";
 
 const DB_NAME = "minha-colecao-moedas";
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 const COLLECTION_STORE = "collection";
 const SETTINGS_STORE = "settings";
+const META_STORE = "meta";
 const FALLBACK_KEY = "minha-colecao-fallback-v1";
 const fallbackSettings: Settings = { theme: "system", view: "list" };
 
-type FallbackData = { items: CollectionItem[]; settings: Settings };
+type FallbackData = {
+  schemaVersion: typeof COLLECTION_SCHEMA_VERSION;
+  items: CollectionItem[];
+  settings: Settings;
+};
 
-let memory: FallbackData = { items: [], settings: fallbackSettings };
+let memory: FallbackData = {
+  schemaVersion: COLLECTION_SCHEMA_VERSION,
+  items: [],
+  settings: fallbackSettings,
+};
 let storageLoaded = false;
 let indexedDbAvailable = true;
-
-function isSettings(value: unknown): value is Settings {
-  if (!value || typeof value !== "object") return false;
-  const candidate = value as Partial<Settings>;
-  return ["system", "light", "dark"].includes(candidate.theme ?? "")
-    && ["list", "grid"].includes(candidate.view ?? "");
-}
-
-function migrateItem(value: unknown): CollectionItem | null {
-  if (!value || typeof value !== "object") return null;
-  const item = value as Partial<CollectionItem>;
-  if (typeof item.coinId !== "string" || !item.coinId) return null;
-  return {
-    coinId: item.coinId,
-    owned: item.owned === true,
-    quantity: Number.isFinite(item.quantity) && Number(item.quantity) >= 0
-      ? Number(item.quantity)
-      : item.owned === true ? 1 : 0,
-    condition: ["", "FC", "SOB", "MBC", "BC", "REGULAR"].includes(item.condition ?? "")
-      ? item.condition
-      : "",
-    acquisitionDate: typeof item.acquisitionDate === "string" ? item.acquisitionDate : undefined,
-    acquisitionPrice: typeof item.acquisitionPrice === "number" && Number.isFinite(item.acquisitionPrice)
-      ? item.acquisitionPrice
-      : null,
-    personalNotes: typeof item.personalNotes === "string" ? item.personalNotes : undefined,
-    updatedAt: typeof item.updatedAt === "string" ? item.updatedAt : new Date(0).toISOString(),
-  };
-}
 
 function loadFallback() {
   if (storageLoaded || typeof window === "undefined") return;
@@ -52,14 +38,19 @@ function loadFallback() {
     if (!parsed || typeof parsed !== "object") return;
     const data = parsed as Partial<FallbackData>;
     memory = {
+      schemaVersion: COLLECTION_SCHEMA_VERSION,
       items: Array.isArray(data.items)
-        ? data.items.map(migrateItem).filter((item): item is CollectionItem => item !== null)
+        ? migrateCollectionItems(data.items)
         : [],
       settings: isSettings(data.settings) ? data.settings : fallbackSettings,
     };
   } catch (error) {
     if (process.env.NODE_ENV === "development") console.warn("[storage] Fallback inválido; usando padrões.", error);
-    memory = { items: [], settings: fallbackSettings };
+    memory = {
+      schemaVersion: COLLECTION_SCHEMA_VERSION,
+      items: [],
+      settings: fallbackSettings,
+    };
   }
 }
 
@@ -85,12 +76,32 @@ function openDatabase(): Promise<IDBDatabase> {
         return;
       }
       const request = window.indexedDB.open(DB_NAME, DB_VERSION);
-      request.onupgradeneeded = () => {
+      request.onupgradeneeded = (event) => {
         const db = request.result;
+        const tx = request.transaction;
         if (!db.objectStoreNames.contains(COLLECTION_STORE)) {
           db.createObjectStore(COLLECTION_STORE, { keyPath: "coinId" });
         }
         if (!db.objectStoreNames.contains(SETTINGS_STORE)) db.createObjectStore(SETTINGS_STORE);
+        const meta = db.objectStoreNames.contains(META_STORE)
+          ? tx?.objectStore(META_STORE)
+          : db.createObjectStore(META_STORE);
+
+        if ((event as IDBVersionChangeEvent).oldVersion < 3 && tx) {
+          const collection = tx.objectStore(COLLECTION_STORE);
+          const cursorRequest = collection.openCursor();
+          cursorRequest.onsuccess = () => {
+            const cursor = cursorRequest.result;
+            if (!cursor) return;
+            const migrated = migrateCollectionItem(cursor.value);
+            if (migrated) {
+              cursor.update({ ...migrated, schemaVersion: COLLECTION_SCHEMA_VERSION });
+            }
+            cursor.continue();
+          };
+        }
+
+        meta?.put(COLLECTION_SCHEMA_VERSION, "collectionSchemaVersion");
       };
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error ?? new Error("Falha ao abrir IndexedDB"));
@@ -149,7 +160,7 @@ export const repository = {
     return tryIndexedDb(
       async () => {
         const rows = await transaction<unknown[]>(COLLECTION_STORE, "readonly", (store) => store.getAll());
-        const items = rows.map(migrateItem).filter((item): item is CollectionItem => item !== null);
+        const items = migrateCollectionItems(rows);
         memory.items = items;
         persistFallback();
         return items;
@@ -158,10 +169,11 @@ export const repository = {
     );
   },
   async save(item: CollectionItem) {
-    const migrated = migrateItem(item);
+    const migrated = migrateCollectionItem(item);
     if (!migrated) return item;
     await tryIndexedDb(
-      () => transaction<IDBValidKey>(COLLECTION_STORE, "readwrite", (store) => store.put(migrated)),
+      () => transaction<IDBValidKey>(COLLECTION_STORE, "readwrite", (store) =>
+        store.put({ ...migrated, schemaVersion: COLLECTION_SCHEMA_VERSION })),
       () => undefined,
     );
     memory.items = [...memory.items.filter((row) => row.coinId !== migrated.coinId), migrated];

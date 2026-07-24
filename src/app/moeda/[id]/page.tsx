@@ -1,3 +1,3 @@
-import {notFound} from "next/navigation";import {coins,getCoin} from "@/data/coins";import {CoinDetail} from "@/components/coins/CoinDetail";
-export function generateStaticParams(){return coins.map(c=>({id:c.id}));}
-export default async function Detail({params}:{params:Promise<{id:string}>}){const {id}=await params;const coin=getCoin(id);if(!coin)notFound();return <CoinDetail coin={coin}/>}
+import {notFound} from "next/navigation";import {catalogEntries,getCatalogEntry} from "@/data/coins";import {CoinDetail} from "@/components/coins/CoinDetail";
+export function generateStaticParams(){return catalogEntries.map(({coinIssue})=>({id:coinIssue.id}));}
+export default async function Detail({params}:{params:Promise<{id:string}>}){const {id}=await params;const entry=getCatalogEntry(id);if(!entry)notFound();return <CoinDetail entry={entry}/>}

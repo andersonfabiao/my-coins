@@ -1,8 +1,8 @@
 "use client";
 import {createContext,useCallback,useContext,useEffect,useMemo,useState} from "react";
 import {repository} from "@/lib/database";
-import type {CollectionItem,Settings} from "@/types";
-type Context={items:Map<string,CollectionItem>;settings:Settings;loading:boolean;toggle:(id:string)=>Promise<void>;save:(item:CollectionItem)=>Promise<void>;replace:(items:CollectionItem[])=>Promise<void>;merge:(items:CollectionItem[])=>Promise<void>;clear:()=>Promise<void>;setSettings:(s:Settings)=>Promise<void>};
+import type {Collection,CollectionItem,Settings} from "@/types";
+type Context=Collection&{loading:boolean;toggle:(id:string)=>Promise<void>;save:(item:CollectionItem)=>Promise<void>;replace:(items:CollectionItem[])=>Promise<void>;merge:(items:CollectionItem[])=>Promise<void>;clear:()=>Promise<void>;setSettings:(s:Settings)=>Promise<void>};
 const C=createContext<Context|null>(null);const defaults:Settings={theme:"system",view:"list"};
 export function CollectionProvider({children}:{children:React.ReactNode}){const [items,setItems]=useState(new Map<string,CollectionItem>());const [settings,setLocalSettings]=useState(defaults);const [loading,setLoading]=useState(true);
  useEffect(()=>{let active=true;Promise.all([repository.all(),repository.settings()]).then(([rows,s])=>{if(!active)return;setItems(new Map(rows.map(i=>[i.coinId,i])));setLocalSettings(s);}).catch(error=>{if(process.env.NODE_ENV==="development")console.error("[collection] Falha ao inicializar; usando dados padrão.",error);}).finally(()=>{if(active)setLoading(false);});return()=>{active=false};},[]);

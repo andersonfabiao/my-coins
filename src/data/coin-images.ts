@@ -1,6 +1,6 @@
-import type { Coin } from "@/types";
+import type { CoinCatalogSource } from "@/domain/catalog";
 
-const denominationCode: Record<Coin["denomination"], string> = {
+const denominationCode: Record<CoinCatalogSource["denomination"], string> = {
   0.01:"001", 0.05:"005", 0.1:"010", 0.25:"025", 0.5:"050", 1:"100",
 };
 const specialImageIds = new Set([
@@ -12,7 +12,7 @@ const specialImageIds = new Set([
   "rio-vinicius-2016","rio-tom-2016","plano-real-2019","real-30-2024","bcb-60-2025",
 ]);
 
-export function officialImagesFor(coin: Coin) {
+export function officialImagesFor(coin: CoinCatalogSource) {
   const isSpecial = specialImageIds.has(coin.id);
   const imageId = isSpecial ? coin.id
     : `${coin.family === "primeira-familia" ? "primeira" : "segunda"}-${denominationCode[coin.denomination]}`;

@@ -1,7 +1,9 @@
-import type { Coin } from "@/types";
+import type { CoinCatalogSource } from "@/domain/catalog";
 import { officialImagesFor } from "@/data/coin-images";
+import { createCatalog, createCatalogEntries, createCatalogEntryIndex, mergeCatalogs } from "@/domain/catalog";
+import { cruzeiroRealCatalog } from "@/data/cruzeiro-real";
 
-const SECOND_FAMILY_MATERIALS: Record<Coin["denomination"], string> = {
+const SECOND_FAMILY_MATERIALS: Record<CoinCatalogSource["denomination"], string> = {
   0.01: "Aço revestido de cobre",
   0.05: "Aço revestido de cobre",
   0.1: "Aço revestido de bronze",
@@ -10,7 +12,7 @@ const SECOND_FAMILY_MATERIALS: Record<Coin["denomination"], string> = {
   1: "Aço inoxidável (núcleo) e aço revestido de bronze (anel)",
 };
 
-const DENOMINATIONS: Coin["denomination"][] = [0.01, 0.05, 0.1, 0.25, 0.5, 1];
+const DENOMINATIONS: CoinCatalogSource["denomination"][] = [0.01, 0.05, 0.1, 0.25, 0.5, 1];
 
 const MINTAGE_ROWS: Array<{
   family: "primeira-familia" | "segunda-familia";
@@ -60,10 +62,10 @@ const MINTAGES = new Map<string, number>(
 );
 
 function technicalSpecs(
-  family: Coin["family"],
-  denomination: Coin["denomination"],
+  family: CoinCatalogSource["family"],
+  denomination: CoinCatalogSource["denomination"],
   year: number,
-): Pick<Coin, "diameterMm" | "weightGrams" | "edge" | "material"> {
+): Pick<CoinCatalogSource, "diameterMm" | "weightGrams" | "edge" | "material"> {
   if (family === "primeira-familia") {
     const specs = {
       0.01: [20, 2.96], 0.05: [21, 3.27], 0.1: [22, 3.59],
@@ -89,12 +91,12 @@ function technicalSpecs(
 }
 
 function regular(
-  family: Coin["family"],
-  denomination: Coin["denomination"],
+  family: CoinCatalogSource["family"],
+  denomination: CoinCatalogSource["denomination"],
   denominationLabel: string,
   years: number[],
   material: string,
-): Coin[] {
+): CoinCatalogSource[] {
   return years.map((year) => {
     const id = `${family}-${denomination}-${year}`;
     return {
@@ -121,7 +123,7 @@ function commemorative(
   subtitle?: string,
   event?: string,
   notes?: string,
-): Coin {
+): CoinCatalogSource {
   return {
     id,
     family: "comemorativa",
@@ -144,7 +146,7 @@ function commemorative(
 
 const years1998To2025 = Array.from({ length: 28 }, (_, index) => 1998 + index);
 
-const firstFamily: Coin[] = [
+const firstFamily: CoinCatalogSource[] = [
   ...regular("primeira-familia", 0.01, "1 centavo", [1994, 1995, 1996, 1997], "Aço inoxidável"),
   ...regular("primeira-familia", 0.05, "5 centavos", [1994, 1995, 1996, 1997], "Aço inoxidável"),
   ...regular("primeira-familia", 0.1, "10 centavos", [1994, 1995, 1996, 1997], "Aço inoxidável"),
@@ -187,7 +189,7 @@ const firstFamily: Coin[] = [
   },
 ];
 
-const secondFamily: Coin[] = [
+const secondFamily: CoinCatalogSource[] = [
   ...regular("segunda-familia", 0.01, "1 centavo", [1998, 1999, 2000, 2001, 2002, 2003, 2004], SECOND_FAMILY_MATERIALS[0.01]),
   ...regular("segunda-familia", 0.05, "5 centavos", years1998To2025, SECOND_FAMILY_MATERIALS[0.05]),
   {
@@ -236,7 +238,7 @@ const secondFamily: Coin[] = [
 
 const rio2016Notes = "Moeda de circulação do programa dos Jogos Olímpicos e Paralímpicos Rio 2016. Tiragem autorizada de 20 milhões.";
 
-const commemoratives: Coin[] = [
+const commemoratives: CoinCatalogSource[] = [
   commemorative(
     "dh-1998",
     1998,
@@ -327,13 +329,17 @@ const commemoratives: Coin[] = [
   ),
 ];
 
-export const coins: Coin[] = [...firstFamily, ...secondFamily, ...commemoratives]
+const realCatalogSources: CoinCatalogSource[] = [...firstFamily, ...secondFamily, ...commemoratives]
   .map((coin) => ({ ...coin, ...officialImagesFor(coin) }));
 
-export const familyNames: Record<Coin["family"], string> = {
+export const catalog = mergeCatalogs(createCatalog(realCatalogSources), cruzeiroRealCatalog);
+export const catalogEntries = createCatalogEntries(catalog);
+
+export const familyNames: Record<string, string> = {
   "primeira-familia": "Primeira Família",
   "segunda-familia": "Segunda Família",
   comemorativa: "Comemorativas",
+  "cruzeiro-real-circulacao": "Moedas de circulação",
 };
 
-export const getCoin = (id: string) => coins.find((coin) => coin.id === id);
+export const getCatalogEntry = createCatalogEntryIndex(catalogEntries);

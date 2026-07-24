@@ -5,49 +5,49 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 import { Header } from "@/components/ui/Header";
 import { Summary } from "@/components/collection/Summary";
 import { useCollection } from "@/context/CollectionContext";
-import { coins, familyNames } from "@/data/coins";
+import { catalog, catalogEntries } from "@/data/coins";
 
 export default function Home() {
   const { items } = useCollection();
-  const owned = coins.filter((coin) => items.get(coin.id)?.owned).length;
-  const families = (Object.keys(familyNames) as (keyof typeof familyNames)[]).map((family) => {
-    const all = coins.filter((coin) => coin.family === family);
+  const owned = catalogEntries.filter(({ coinIssue }) => items.get(coinIssue.id)?.owned).length;
+  const systems = catalog.monetarySystems.map((system) => {
+    const all = catalogEntries.filter(({ monetarySystem }) => monetarySystem.id === system.id);
     return {
-      family,
+      system,
       total: all.length,
-      owned: all.filter((coin) => items.get(coin.id)?.owned).length,
+      owned: all.filter(({ coinIssue }) => items.get(coinIssue.id)?.owned).length,
     };
   });
 
   return (
     <>
-      <Header title="Olá, Fabião 👋" subtitle="Sua coleção do Real Brasileiro" />
-      <Summary owned={owned} />
+      <Header title="Olá, Fabião 👋" subtitle="Sua coleção de moedas brasileiras" />
+      <Summary owned={owned} collections={catalog.monetarySystems.length} />
       <div className="sectionTitle">
         <h2>Suas coleções</h2>
         <Link href="/catalogo/">Ver catálogo <ArrowRight /></Link>
       </div>
       <div className="familyGrid">
-        {families.map(({ family, total, owned: familyOwned }) => {
-          const percent = Math.round((familyOwned / total) * 100);
+        {systems.map(({ system, total, owned: systemOwned }) => {
+          const percent = total ? Math.round((systemOwned / total) * 100) : 0;
           return (
-            <Link href={`/catalogo/?familia=${family}`} className="familyCard" key={family}>
+            <Link href={`/catalogo/?pais=brasil&padrao=${system.id}`} className="familyCard" key={system.id}>
               <div className="familyRing" style={{ "--progress": `${percent * 3.6}deg` } as React.CSSProperties}>
                 <span>{percent}%</span>
               </div>
               <div className="familyInfo">
-                <h3>{familyNames[family]}</h3>
-                <p>{familyOwned}/{total} moedas</p>
+                <h3>{system.name}</h3>
+                <p>{systemOwned}/{total} moedas</p>
               </div>
               <ChevronRight aria-hidden="true" />
             </Link>
           );
         })}
         <Link href="/faltantes/" className="familyCard missing">
-          <div className="familyRing missingRing"><span>{coins.length - owned}</span></div>
+          <div className="familyRing missingRing"><span>{catalogEntries.length - owned}</span></div>
           <div className="familyInfo">
             <h3>Moedas faltantes</h3>
-            <p>{coins.length - owned} itens para completar</p>
+            <p>{catalogEntries.length - owned} itens para completar</p>
           </div>
           <ChevronRight aria-hidden="true" />
         </Link>
